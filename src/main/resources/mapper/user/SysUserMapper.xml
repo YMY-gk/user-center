@@ -29,4 +29,8 @@
         <result column="is_del" property="isDel" />
     </resultMap>
 
+    <select id="selectByName" resultMap="BaseResultMap">
+        select * from sys_user u where  u.login_name=${username} and u.realm_id =${realm} limit 1
+    </select>
+
 </mapper>

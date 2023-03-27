@@ -2,6 +2,7 @@ package com.user.mapper;
 
 import com.user.domain.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.data.repository.query.Param;
 
 /**
  * <p>
@@ -9,8 +10,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author GUOKUI
- * @since 2023-03-22
+ * @since 2023-03-26
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
+    SysUser selectByName(@Param("username") String username, @Param("realm") Long realm);
 }

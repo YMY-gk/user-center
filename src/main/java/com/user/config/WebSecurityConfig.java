@@ -18,18 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    /**
-     * 操作数据库配置和忽略
-     * @param auth
-     * @throws Exception
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
 
     /**
      * 密码处理
@@ -40,18 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return  new BCryptPasswordEncoder();//没有加密
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/oauth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .permitAll()
-                .and()
-                .csrf().disable();
-    }
 
     @Override
     @Bean

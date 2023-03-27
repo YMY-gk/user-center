@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author GUOKUI
- * @since 2023-03-22
+ * @since 2023-03-26
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -65,10 +65,10 @@ public class SysCompany extends Model<SysCompany> {
     private Long updateTime;
 
     /**
-     * 创建人id
+     * 创建人
      */
     @TableField("creator")
-    private Long creator;
+    private String creator;
 
 
     @Override

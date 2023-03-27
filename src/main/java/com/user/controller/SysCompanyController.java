@@ -3,7 +3,7 @@ package com.user.controller;
 
 import com.user.common.result.Result;
 import com.user.domain.SysCompany;
-import com.user.service.impl.SysCompanyService;
+import com.user.service.user.impl.SysCompanyService;
 import com.user.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -78,11 +78,11 @@ public class CodeGenerator {
         // TODO 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.me.user");
+        pc.setParent("com.user");
         pc.setEntity("domain");
         pc.setMapper("mapper");
-        pc.setServiceImpl("service.impl");
-        pc.setService("service");
+        pc.setServiceImpl("service.user.impl");
+        pc.setService("service.user");
         pc.setController("controller");
         mpg.setPackageInfo(pc);
 
