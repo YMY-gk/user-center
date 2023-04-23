@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,11 @@ public class MyUserDetialService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Long realm =1L;
-       // SysUser user = sysUserService.selectByName(username,realm);
+//        SysUser user = sysUserService.selectByName(username,realm);
+//        if (ObjectUtils.isEmpty(user)|| StringUtils.isEmpty(user.getPassword())){
+//
+//            throw new UsernameNotFoundException("用户名/密码不存在！");
+//        }
        // String pwd =user.getPassword();//user.getData().getPassword();
         // 第三个参数表示权限
         return new User(username,new BCryptPasswordEncoder().encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("user,ROLE_role1"));

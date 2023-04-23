@@ -1,5 +1,7 @@
 server:
   port: 7003
+  servlet:
+    context-path: /user
 spring:
   application:
     name: user
@@ -31,3 +33,5 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mapper/*/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.user.domain.*  # 注意：对应实体类的路径
+initialization:
+   password: 1111111

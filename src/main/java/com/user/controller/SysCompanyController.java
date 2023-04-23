@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -32,9 +33,9 @@ public class SysCompanyController {
     @Resource
     HttpServletRequest request;
     @GetMapping("/get")
-    public Result<SysCompany> getCompany(@RequestParam() Long id){
-       Integer realmId =  request.getIntHeader("realm_id");
-        SysCompany company = sysCompanyService.getById(id);
+    public Result< List<SysCompany>> getCompany(){
+      // Integer realmId =  request.getIntHeader("realm_id");
+        List<SysCompany> company = sysCompanyService.list();
         return ResultUtil.OK(company);
     }
 

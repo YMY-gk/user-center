@@ -36,10 +36,6 @@ import java.security.KeyPair;
  */
 @Configuration
 public class TokenConfig {
-//    @Bean
-//    public TokenStore tokenStore() {
-//        return new InMemoryTokenStore();
-//    }
     @Bean
     public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
@@ -51,7 +47,7 @@ public class TokenConfig {
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter( ) {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        DefaultJwt converter = new DefaultJwt();
         converter.setKeyPair(keyPair());
         return converter;
     }
