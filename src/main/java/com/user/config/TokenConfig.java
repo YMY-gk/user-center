@@ -1,5 +1,6 @@
 package com.user.config;
 
+import com.user.config.Handler.DefaultJwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;

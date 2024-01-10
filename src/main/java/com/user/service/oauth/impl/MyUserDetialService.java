@@ -1,6 +1,10 @@
 package com.user.service.oauth.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.user.config.Handler.UserInfo;
+import com.user.config.bean.InitializationBean;
 import com.user.domain.SysUser;
+import com.user.dto.resp.LoginUserInfo;
 import com.user.service.user.impl.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +33,27 @@ public class MyUserDetialService implements UserDetailsService {
     private SysUserService sysUserService;
     @Resource
     HttpServletRequest request;
+    @Resource
+    InitializationBean initializationBean;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Long realm =1L;
-//        SysUser user = sysUserService.selectByName(username,realm);
-//        if (ObjectUtils.isEmpty(user)|| StringUtils.isEmpty(user.getPassword())){
-//
-//            throw new UsernameNotFoundException("用户名/密码不存在！");
-//        }
+        LoginUserInfo userInfo = new LoginUserInfo();
+        if (initializationBean.getUserName().equals(username)){
+           User user =  new UserInfo(username,new BCryptPasswordEncoder().encode(initializationBean.getPassword()),
+                    AuthorityUtils.commaSeparatedStringToAuthorityList("admin"),userInfo);
+            return user;
+        }
+        SysUser user = sysUserService.selectByName(username);
+        if (ObjectUtils.isEmpty(user)|| StringUtils.isEmpty(user.getPassword())){
+
+            throw new UsernameNotFoundException("用户名/密码不存在！");
+        }
+        BeanUtil.copyProperties(user,userInfo);
        // String pwd =user.getPassword();//user.getData().getPassword();
         // 第三个参数表示权限
-        return new User(username,new BCryptPasswordEncoder().encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("user,ROLE_role1"));
+        User useinfo  =  new UserInfo<LoginUserInfo>(username,new BCryptPasswordEncoder().encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("user,ROLE_role1"),userInfo);
+        return useinfo;
+
     }
 }

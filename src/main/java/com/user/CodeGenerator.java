@@ -146,8 +146,8 @@ public class CodeGenerator {
         strategy.setLogicDeleteFieldName("is_del");
         // TODO 指定生成的bean的数据库表名
 //
-//        strategy.setInclude("srs_roadshow_outbound_rel");
-//        //strategy.setSuperEntityColumns("id");
+        strategy.setInclude("sys_company");
+        strategy.setSuperEntityColumns("id");
         strategy.setTableFillList(tableFillList);
         mpg.setStrategy(strategy);
         // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！

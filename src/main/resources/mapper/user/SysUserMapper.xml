@@ -28,9 +28,32 @@
         <result column="remark" property="remark" />
         <result column="is_del" property="isDel" />
     </resultMap>
+ <!-- 通用查询映射结果 -->
+    <resultMap id="ShowResultMap" type="com.user.dto.resp.UserVo">
+        <id column="user_id" property="userId" />
+        <result column="realm_id" property="realmId" />
+        <result column="dept_id" property="deptId" />
+        <result column="login_name" property="loginName" />
+        <result column="user_type" property="userType" />
+        <result column="email" property="email" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="sex" property="sex" />
+        <result column="avatar" property="avatar" />
+        <result column="status" property="status" />
+        <result column="login_ip" property="loginIp" />
+        <result column="login_date" property="loginDate" />
+        <result column="pwd_update_date" property="pwdUpdateDate" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="remark" property="remark" />
+        <result column="is_del" property="isDel" />
+    </resultMap>
 
     <select id="selectByName" resultMap="BaseResultMap">
-        select * from sys_user u where  u.login_name=${username} and u.realm_id =${realm} limit 1
+        select * from sys_user u where  u.login_name = #{username}  and u.status =0 and is_del = 0 limit 1
     </select>
 
+    <select id="queryList" resultMap="ShowResultMap">
+        select * from sys_user u
+    </select>
 </mapper>

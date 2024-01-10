@@ -107,12 +107,6 @@ public class SysUser extends Model<SysUser> {
     private Integer status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
-     */
-    @TableField("del_flag")
-    private String delFlag;
-
-    /**
      * 最后登录IP
      */
     @TableField("login_ip")

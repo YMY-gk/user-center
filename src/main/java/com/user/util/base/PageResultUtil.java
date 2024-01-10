@@ -1,4 +1,4 @@
-package com.user.util;
+package com.user.util.base;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.user.common.CommonCode;

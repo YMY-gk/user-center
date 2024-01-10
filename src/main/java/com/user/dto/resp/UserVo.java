@@ -1,5 +1,8 @@
 package com.user.dto.resp;
 
+import lombok.Data;
+
+@Data
 public class UserVo {
 
     private Long userId;
@@ -29,6 +32,10 @@ public class UserVo {
      */
     private String email;
 
+    /**
+     * 代码
+     */
+    private String areaCode;
     /**
      * 手机号码
      */
@@ -81,6 +88,10 @@ public class UserVo {
      * 是否删除：0未，1删除
      */
     private Integer isDel;
+
+    private Integer realmId;
+
+    private String deptId;
 
 }
 

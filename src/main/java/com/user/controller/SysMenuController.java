@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2023-03-26
  */
 @Controller
-@RequestMapping("/sys-menu")
+@RequestMapping("/menu")
 public class SysMenuController {
 
 }

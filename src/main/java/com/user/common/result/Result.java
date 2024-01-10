@@ -2,6 +2,7 @@ package com.user.common.result;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Data
+@NoArgsConstructor
 public class Result<T> implements Serializable {
 
     public Result(ResultCode resultCode){

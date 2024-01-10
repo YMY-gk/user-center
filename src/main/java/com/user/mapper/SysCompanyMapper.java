@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 公司表 Mapper 接口
+ * 企业表 Mapper 接口
  * </p>
  *
  * @author GUOKUI
- * @since 2023-03-26
+ * @since 2023-09-25
  */
 public interface SysCompanyMapper extends BaseMapper<SysCompany> {
 

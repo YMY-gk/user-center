@@ -16,6 +16,7 @@ import lombok.Getter;
 public enum CommonCode implements ResultCode {
 
 
+    LOGIN_ERROR(201, "用户名密码错误！"),
 
     PARAM(202, "参数错误"),
     TIME_PARAM(202, "时间参数错误"),

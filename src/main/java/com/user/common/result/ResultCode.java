@@ -3,8 +3,8 @@ package com.user.common.result;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.user.util.PageResultUtil;
-import com.user.util.ResultUtil;
+import com.user.util.base.PageResultUtil;
+import com.user.util.base.ResultUtil;
 
 /**
  * <p></p>

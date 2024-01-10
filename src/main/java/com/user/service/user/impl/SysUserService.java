@@ -1,6 +1,5 @@
 package com.user.service.user.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.common.CommonCode;
@@ -12,8 +11,8 @@ import com.user.dto.resp.UserVo;
 import com.user.mapper.SysUserMapper;
 import com.user.service.user.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.user.util.PageResultUtil;
-import com.user.util.ResultUtil;
+import com.user.util.base.PageResultUtil;
+import com.user.util.base.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,17 +37,13 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
     private  String password;
 
 
-    public PageResult<SysUser> getList(UserReq user) {
-        Page<SysUser> page = new Page<>(user.getPageIndex(),user.getPageSize());
-        QueryWrapper<SysUser> userQueryWrapper  = new QueryWrapper<>();
-
-        userQueryWrapper.lambda().eq(ObjectUtils.isNotEmpty(user.getUserId()),SysUser::getUserId,user.getUserId())
-                .eq(ObjectUtils.isNotEmpty(user.getPhonenumber()),SysUser::getPhonenumber,user.getPhonenumber());
-        Page<SysUser>  result= this.baseMapper.selectPage(page,userQueryWrapper);
+    public PageResult<UserVo> getList(UserReq user) {
+        Page<UserVo> page = new Page<>(user.getPageIndex(),user.getPageSize());
+        Page<UserVo> result= this.baseMapper.queryList(page,user);
         return PageResultUtil.OK(result);
     }
-    public SysUser selectByName(String username, Long realm) {
-        return  this.baseMapper.selectByName(username,realm);
+    public SysUser selectByName(String username) {
+        return  this.baseMapper.selectByName(username);
     }
 
     public Result<Object>  addUser(SysUser user) {

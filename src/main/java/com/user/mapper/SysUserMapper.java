@@ -1,8 +1,11 @@
 package com.user.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.domain.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.data.repository.query.Param;
+import com.user.dto.req.UserReq;
+import com.user.dto.resp.UserVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +17,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    SysUser selectByName(@Param("username") String username, @Param("realm") Long realm);
+    SysUser selectByName(@Param("username") String username);
+
+    Page<UserVo> queryList(Page<UserVo> page, @Param("user")  UserReq user);
 }
