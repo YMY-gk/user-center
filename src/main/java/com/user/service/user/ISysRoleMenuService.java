@@ -2,6 +2,10 @@ package com.user.service.user;
 
 import com.user.domain.SysRoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.user.dto.req.RoleReq;
+import com.user.dto.resp.MenuVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
+    List<MenuVo> getRoleMenus(RoleReq req);
+
+    void operateRoleMenu(RoleReq req);
 }

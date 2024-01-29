@@ -22,5 +22,52 @@
         <result column="remark" property="remark" />
         <result column="is_del" property="isDel" />
     </resultMap>
+    <resultMap id="ResultTreeMap" type="com.user.dto.resp.MenuTree">
+        <id column="menu_id" property="menuId" />
+        <result column="menu_name" property="menuName" />
+        <result column="parent_id" property="parentId" />
+        <result column="order_num" property="orderNum" />
+        <result column="url" property="url" />
+        <result column="target" property="target" />
+        <result column="menu_type" property="menuType" />
+        <result column="visible" property="visible" />
+        <result column="perms" property="perms" />
+        <result column="icon" property="icon" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.MenuVo">
+        <id column="menu_id" property="menuId" />
+        <result column="menu_name" property="menuName" />
+        <result column="parent_id" property="parentId" />
+        <result column="order_num" property="orderNum" />
+        <result column="url" property="url" />
+        <result column="target" property="target" />
+        <result column="menu_type" property="menuType" />
+        <result column="visible" property="visible" />
+        <result column="perms" property="perms" />
+        <result column="icon" property="icon" />
+        <result column="remark" property="remark" />
+    </resultMap>
 
+    <select id="getMenus" resultMap="ResultTreeMap">
+        select m.* from sys_menu  m
+        <where>
+            is_del = 0
+        </where>
+        order by order_num
+    </select>
+
+    <select id="getMenuById" resultMap="ResultVoMap">
+        select m.* from sys_menu  m
+        <where>
+                m.menu_id =#{menuId}
+        </where>
+    </select>
+
+    <select id="getMenuByParentId" resultMap="ResultVoMap">
+        select m.* from sys_menu  m
+        <where>
+            m.parent_id =#{menuId}
+        </where>
+    </select>
 </mapper>

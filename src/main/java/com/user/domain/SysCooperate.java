@@ -1,11 +1,8 @@
 package com.user.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,8 +19,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_company")
-public class SysCompany extends Model<SysCompany> {
+@TableName("sys_cooperate")
+public class SysCooperate extends Model<SysCooperate> {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,12 +37,6 @@ public class SysCompany extends Model<SysCompany> {
     private String name;
 
     /**
-     * 机构唯一编码
-     */
-    @TableField("realm")
-    private String realm;
-
-    /**
      * 续期时间
      */
     @TableField("renewal_date")
@@ -60,14 +51,14 @@ public class SysCompany extends Model<SysCompany> {
     /**
      * 公司地区
      */
-    @TableField("company_area")
-    private String companyArea;
+    @TableField("cooperate_area")
+    private String cooperateArea;
 
     /**
      * 公司地址
      */
-    @TableField("company_address")
-    private String companyAddress;
+    @TableField("cooperate_address")
+    private String cooperateAddress;
 
     /**
      * 营业执照-图片
@@ -78,8 +69,8 @@ public class SysCompany extends Model<SysCompany> {
     /**
      * 公司电话
      */
-    @TableField("company_phone")
-    private String companyPhone;
+    @TableField("cooperate_phone")
+    private String cooperatePhone;
 
     /**
      * 邮箱
@@ -90,8 +81,8 @@ public class SysCompany extends Model<SysCompany> {
     /**
      * 公司规模
      */
-    @TableField("company_size")
-    private Double companySize;
+    @TableField("cooperate_size")
+    private Double cooperateSize;
 
     /**
      * 所属行业
@@ -108,8 +99,9 @@ public class SysCompany extends Model<SysCompany> {
     /**
      * 状态
      */
-    @TableField("state")
-    private Integer state;
+    @TableField("is_del")
+    @TableLogic
+    private Integer isDel;
 
     /**
      * 当前余额
@@ -120,7 +112,7 @@ public class SysCompany extends Model<SysCompany> {
     /**
      * 创建时间
      */
-    @TableField("create_time")
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private Long createTime;
 
     /**
@@ -128,6 +120,11 @@ public class SysCompany extends Model<SysCompany> {
      */
     @TableField("contactor")
     private String contactor;
+    /**
+     * 是否合作 0否，1：是
+     */
+    @TableField("is_cooperate")
+    private Integer isCooperate;
 
 
     @Override

@@ -37,9 +37,5 @@ public class UserReq  extends BaseParam {
      * 帐号状态（0正常 1停用，2离职）
      */
     private String status;
-
-
-
-
 }
 

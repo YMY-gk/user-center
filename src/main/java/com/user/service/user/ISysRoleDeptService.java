@@ -2,6 +2,10 @@ package com.user.service.user;
 
 import com.user.domain.SysRoleDept;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.user.dto.req.RoleReq;
+import com.user.dto.resp.RoleVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysRoleDeptService extends IService<SysRoleDept> {
 
+    void operateRoleDept(RoleReq req);
+
+    List<RoleVo> getRoleDepts(RoleReq req);
 }

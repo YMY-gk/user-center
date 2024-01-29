@@ -1,12 +1,9 @@
 package com.user.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,7 +44,7 @@ public class SysMenu extends Model<SysMenu> {
     private String menuName;
 
     /**
-     * 父菜单ID
+     * 父菜单ID 默认是：0
      */
     @TableField("parent_id")
     private Long parentId;
@@ -97,40 +94,38 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 创建者
      */
-    @TableField("create_by")
+    @TableField(value = "create_by",fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      */
-    @TableField("create_time")
-    private LocalDateTime createTime;
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
+    private Long createTime;
 
     /**
      * 更新者
      */
-    @TableField("update_by")
+    @TableField(value = "update_by",fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
     /**
      * 更新时间
      */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
+    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
+    private Long updateTime;
 
     /**
      * 备注
      */
     @TableField("remark")
     private String remark;
-
     /**
-     * 是否删除：0未，1删除
+     * 是否删除 0正常，1删除
      */
     @TableField("is_del")
     @TableLogic
     private Integer isDel;
-
 
     @Override
     protected Serializable pkVal() {

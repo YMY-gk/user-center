@@ -27,9 +27,9 @@ public class CodeGenerator {
     /**
      * 数据库用户名 密码 url 及注释中author的配置
      */
-    private static String url="jdbc:mysql://182.254.221.85:3306/user-center?useUnicode=true&characterEncoding=utf8";
+    private static String url="jdbc:mysql://127.0.0.1:3306/user-center?useUnicode=true&characterEncoding=utf8";
     private static String username="root";
-    private static String password="ROOT_mysql_3306";
+    private static String password="3306";
     private static String driverName="com.mysql.cj.jdbc.Driver";
     private static String author = "GUOKUI";
 
@@ -146,7 +146,7 @@ public class CodeGenerator {
         strategy.setLogicDeleteFieldName("is_del");
         // TODO 指定生成的bean的数据库表名
 //
-        strategy.setInclude("sys_company");
+        strategy.setInclude("sys_dict_data");
         strategy.setSuperEntityColumns("id");
         strategy.setTableFillList(tableFillList);
         mpg.setStrategy(strategy);

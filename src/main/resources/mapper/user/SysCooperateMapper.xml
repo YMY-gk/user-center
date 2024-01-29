@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.user.mapper.SysCooperateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.user.domain.SysCooperate">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="renewal_date" property="renewalDate" />
+        <result column="expiration_date" property="expirationDate" />
+        <result column="cooperate_area" property="cooperateArea" />
+        <result column="cooperate_address" property="cooperateAddress" />
+        <result column="business_license" property="businessLicense" />
+        <result column="cooperate_phone" property="cooperatePhone" />
+        <result column="mailbox" property="mailbox" />
+        <result column="cooperate_size" property="cooperateSize" />
+        <result column="industry" property="industry" />
+        <result column="audit_state" property="auditState" />
+        <result column="is_del" property="isDel" />
+        <result column="balance" property="balance" />
+        <result column="create_time" property="createTime" />
+        <result column="contactor" property="contactor" />
+        <result column="is_cooperate" property="isCooperate" />
+    </resultMap>
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.CooperateVo">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="renewal_date" property="renewalDate" />
+        <result column="expiration_date" property="expirationDate" />
+        <result column="cooperate_area" property="cooperateArea" />
+        <result column="cooperate_address" property="cooperateAddress" />
+        <result column="business_license" property="businessLicense" />
+        <result column="cooperate_phone" property="cooperatePhone" />
+        <result column="mailbox" property="mailbox" />
+        <result column="cooperate_size" property="cooperateSize" />
+        <result column="industry" property="industry" />
+        <result column="audit_state" property="auditState" />
+        <result column="is_del" property="isDel" />
+        <result column="balance" property="balance" />
+        <result column="create_time" property="createTime" />
+        <result column="contactor" property="contactor" />
+        <result column="is_cooperate" property="isCooperate" />
+    </resultMap>
+
+    <select id="searchcooperate" resultMap="ResultVoMap">
+            select  * from  sys_cooperate c
+            <where>
+                c.is_del = 0
+                <if test="req.name !=null and req.name!=''">
+                    and c.name like concat('%',#{req.name},'%')
+                </if>
+            </where>
+            order by id asc
+    </select>
+</mapper>

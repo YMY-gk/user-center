@@ -18,5 +18,23 @@
         <result column="remark" property="remark" />
         <result column="is_del" property="isDel" />
     </resultMap>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.RoleVo">
+        <id column="role_id" property="roleId" />
+        <result column="realm_id" property="realmId" />
+        <result column="role_name" property="roleName" />
+        <result column="role_key" property="roleKey" />
+        <result column="role_sort" property="roleSort" />
+        <result column="data_scope" property="dataScope" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <select id="getRoles" resultMap="ResultVoMap">
+        select r.* from sys_role r WHERE r.is_del =  0
+        <if test="req.realmId !=null and req.realmId!=''">
+            r.realm_id = #{req.realmId}
+        </if>
+        ORDER BY r.realm_id ,r.role_sort
 
+    </select>
 </mapper>
