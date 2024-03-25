@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysMenu">
-        <id column="menu_id" property="menuId" />
+        <id column="id" property="id" />
         <result column="realm_id" property="realmId" />
         <result column="menu_name" property="menuName" />
         <result column="parent_id" property="parentId" />
@@ -23,7 +23,7 @@
         <result column="is_del" property="isDel" />
     </resultMap>
     <resultMap id="ResultTreeMap" type="com.user.dto.resp.MenuTree">
-        <id column="menu_id" property="menuId" />
+        <id column="id" property="id" />
         <result column="menu_name" property="menuName" />
         <result column="parent_id" property="parentId" />
         <result column="order_num" property="orderNum" />
@@ -36,7 +36,7 @@
         <result column="remark" property="remark" />
     </resultMap>
     <resultMap id="ResultVoMap" type="com.user.dto.resp.MenuVo">
-        <id column="menu_id" property="menuId" />
+        <id column="id" property="id" />
         <result column="menu_name" property="menuName" />
         <result column="parent_id" property="parentId" />
         <result column="order_num" property="orderNum" />
@@ -60,14 +60,14 @@
     <select id="getMenuById" resultMap="ResultVoMap">
         select m.* from sys_menu  m
         <where>
-                m.menu_id =#{menuId}
+                m.id =#{id}
         </where>
     </select>
 
     <select id="getMenuByParentId" resultMap="ResultVoMap">
         select m.* from sys_menu  m
         <where>
-            m.parent_id =#{menuId}
+            m.parent_id =#{id}
         </where>
     </select>
 </mapper>

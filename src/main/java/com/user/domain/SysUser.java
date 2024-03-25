@@ -41,12 +41,6 @@ public class SysUser extends Model<SysUser> {
     private Long realmId;
 
     /**
-     * 部门ID
-     */
-    @TableField("dept_id")
-    private Long deptId;
-
-    /**
      * 登录账号
      */
     @TableField("login_name")
@@ -75,6 +69,11 @@ public class SysUser extends Model<SysUser> {
      */
     @TableField("phonenumber")
     private String phonenumber;
+    /**
+     * 国际代码
+     */
+    @TableField("area_code")
+    private String areaCode;
 
     /**
      * 用户性别（0男 1女 2未知）

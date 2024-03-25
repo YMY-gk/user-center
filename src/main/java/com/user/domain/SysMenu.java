@@ -28,8 +28,8 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 菜单ID
      */
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long menuId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 公司id
@@ -129,7 +129,7 @@ public class SysMenu extends Model<SysMenu> {
 
     @Override
     protected Serializable pkVal() {
-        return this.menuId;
+        return this.id;
     }
 
 }

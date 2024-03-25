@@ -26,5 +26,5 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
     void deleteIds(@Param("ids") List<Long> ids, @Param("updateBy") String updateby, @Param("time") long currentTimeMillis);
 
 
-    List<SysDictData> getDictDataByType(@Param("type") String type, @Param("realmId") Integer realmId);
+    List<SysDictData> getDictDataByType(@Param("type") String type, @Param("realmId") Long realmId);
 }

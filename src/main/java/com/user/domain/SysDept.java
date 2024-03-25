@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.user.common.CommonConest;
+import com.user.config.bean.LoginSession;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -31,8 +34,8 @@ public class SysDept extends Model<SysDept> {
     /**
      * 部门id
      */
-    @TableId(value = "dept_id", type = IdType.AUTO)
-    private Long deptId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 公司id
@@ -45,12 +48,6 @@ public class SysDept extends Model<SysDept> {
      */
     @TableField("parent_id")
     private Long parentId;
-
-    /**
-     * 祖级列表
-     */
-    @TableField("ancestors")
-    private String ancestors;
 
     /**
      * 部门名称
@@ -71,24 +68,6 @@ public class SysDept extends Model<SysDept> {
     private String leader;
 
     /**
-     * 联系电话
-     */
-    @TableField("phone")
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    @TableField("email")
-    private String email;
-
-    /**
-     * 部门状态（0正常 1停用）
-     */
-    @TableField("status")
-    private String status;
-
-    /**
      * 创建者
      */
     @TableField("creator")
@@ -98,7 +77,7 @@ public class SysDept extends Model<SysDept> {
      * 创建时间
      */
     @TableField("create_time")
-    private LocalDateTime createTime;
+    private Long createTime;
 
     /**
      * 更新者
@@ -110,19 +89,28 @@ public class SysDept extends Model<SysDept> {
      * 更新时间
      */
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Long updateTime;
 
     /**
      * 删除标志（0代表存在 1代表删除）
      */
     @TableField("is_del")
     @TableLogic
-    private Boolean isDel;
+    private Integer isDel;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.deptId;
+        return this.id;
     }
 
+    public void initAdmin(Long realmId,String deptName) {
+        this.setRealmId(realmId)
+                .setDeptName(deptName)
+                .setCreator( LoginSession.getUserName())
+                .setLeader( LoginSession.getUserName())
+                .setParentId(CommonConest.treeParentId)
+                .setOrderNum(0)
+                .setCreateTime(System.currentTimeMillis());
+    }
 }

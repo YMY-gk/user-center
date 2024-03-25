@@ -125,6 +125,16 @@ public class SysCooperate extends Model<SysCooperate> {
      */
     @TableField("is_cooperate")
     private Integer isCooperate;
+    /**
+     * 审核备注
+     */
+    @TableField("audit_remark")
+    private String auditRemark;
+    /**
+     * 合作方介绍
+     */
+    @TableField("remark")
+    private String remark;
 
 
     @Override

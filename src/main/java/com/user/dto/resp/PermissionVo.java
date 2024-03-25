@@ -29,6 +29,12 @@ public class PermissionVo {
      */
     private Long id;
 
+
+    /**
+     *
+     */
+    private Long mpId;
+
     /**
      * 接口名称
      */
@@ -51,4 +57,17 @@ public class PermissionVo {
      * 备注
      */
     private String remark;
+    /**
+     * 是否开发 0 否 1是
+     */
+    private Integer isOpen;
+    /**
+     * 是否开发 0 否 1是
+     */
+    private String source;
+    /**
+     *
+     */
+    private String menuName;
+    private Boolean isSelect;
 }

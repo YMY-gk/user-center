@@ -32,7 +32,7 @@ public class MenuReq extends BaseParam {
     /**
      * 菜单
      */
-    private List<Long> menuIds;
+    private List<Long> ids;
     /**
      *权限ids
      */

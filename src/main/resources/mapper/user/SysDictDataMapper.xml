@@ -56,7 +56,7 @@
                     and d.realm_id =#{req.realmId}
                 </if>
             </where>
-        order by  d.dict_type desc ,d.dict_sort asc
+        order by  t.id desc ,d.dict_sort asc
     </select>
 
     <select id="listDictData" resultMap="BaseResultMap">
@@ -79,7 +79,7 @@
         order by  dict_type desc ,dict_sort asc
     </select>
     <update id="deleteIds">
-        update sys_dict_type set is_del= 1 and update_time =#{time} and update_by = #{updateBy}
+        update sys_dict_data set is_del= 1 , update_time =#{time} , update_by = #{updateBy}
         where
         <foreach collection="ids" item="item" open="id in(" separator="," close=")" index="index">
             #{item}

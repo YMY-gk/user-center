@@ -1,5 +1,6 @@
 package com.user.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -24,11 +25,16 @@ import lombok.experimental.Accessors;
 public class SysMenuPermission extends Model<SysMenuPermission> {
 
     private static final long serialVersionUID = 1L;
+    /**
+     * 菜单ID
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 菜单ID
      */
-    @TableId("menu_id")
+    @TableField("menu_id")
     private Long menuId;
 
     /**
@@ -40,7 +46,7 @@ public class SysMenuPermission extends Model<SysMenuPermission> {
 
     @Override
     protected Serializable pkVal() {
-        return this.menuId;
+        return this.id;
     }
 
 }

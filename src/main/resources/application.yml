@@ -40,3 +40,4 @@ initialization:
    userName: admin
    password: admin
    customPwd: 8888888
+   realmId: 1

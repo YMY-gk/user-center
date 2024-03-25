@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysRoleMenu">
         <id column="role_id" property="roleId" />
-        <result column="menu_id" property="menuId" />
+        <result column="id" property="id" />
         <result column="realm_id" property="realmId" />
     </resultMap>
 

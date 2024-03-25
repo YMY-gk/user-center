@@ -34,8 +34,8 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
     /**
      * 菜单ID
      */
-    @TableField("menu_id")
-    private Long menuId;
+    @TableField("id")
+    private Long id;
 
     /**
      * 公司id

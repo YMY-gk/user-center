@@ -21,6 +21,8 @@
         <result column="create_time" property="createTime" />
         <result column="contactor" property="contactor" />
         <result column="is_cooperate" property="isCooperate" />
+        <result column="audit_remark" property="auditRemark" />
+        <result column="remark" property="remark" />
     </resultMap>
     <resultMap id="ResultVoMap" type="com.user.dto.resp.CooperateVo">
         <result column="id" property="id" />
@@ -40,6 +42,8 @@
         <result column="create_time" property="createTime" />
         <result column="contactor" property="contactor" />
         <result column="is_cooperate" property="isCooperate" />
+        <result column="audit_remark" property="auditRemark" />
+        <result column="remark" property="remark" />
     </resultMap>
 
     <select id="searchcooperate" resultMap="ResultVoMap">
@@ -48,6 +52,9 @@
                 c.is_del = 0
                 <if test="req.name !=null and req.name!=''">
                     and c.name like concat('%',#{req.name},'%')
+                </if>
+                <if test="req.id !=null and req.id!=''">
+                    and c.id  = #{req.id}
                 </if>
             </where>
             order by id asc

@@ -6,7 +6,6 @@
     <resultMap id="BaseResultMap" type="com.user.domain.SysUserDept">
         <id column="user_id" property="userId" />
         <result column="role_id" property="roleId" />
-        <result column="realm_id" property="realmId" />
     </resultMap>
 
 </mapper>

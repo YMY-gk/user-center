@@ -18,4 +18,5 @@ public  class InitializationBean {
     public  String userName;
     public  String password;
     public  String customPwd;
+    public  Long realmId;
 }

@@ -18,4 +18,6 @@ import java.util.List;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
     List<RoleVo> getRoles(@Param("req") RoleReq req);
+
+    SysRole selectByAdmin(@Param("isAdmin") Integer isAdmin,@Param("realmId")  Long realmId);
 }

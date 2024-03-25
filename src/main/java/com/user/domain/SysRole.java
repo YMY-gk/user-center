@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.user.common.CommonConest;
+import com.user.config.bean.LoginSession;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -62,13 +65,13 @@ public class SysRole extends Model<SysRole> {
      * 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
      */
     @TableField("data_scope")
-    private String dataScope;
+    private Integer dataScope;
 
     /**
-     * 角色状态（0正常 1停用）
+     * 角色状态（0；异常 1正常）
      */
     @TableField("status")
-    private String status;
+    private Integer status;
 
     /**
      * 创建者
@@ -80,7 +83,7 @@ public class SysRole extends Model<SysRole> {
      * 创建时间
      */
     @TableField("create_time")
-    private LocalDateTime createTime;
+    private Long createTime;
 
     /**
      * 更新者
@@ -92,7 +95,7 @@ public class SysRole extends Model<SysRole> {
      * 更新时间
      */
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Long updateTime;
 
     /**
      * 备注
@@ -106,6 +109,11 @@ public class SysRole extends Model<SysRole> {
     @TableField("is_del")
     @TableLogic
     private Integer isDel;
+    /**
+     * 是否删除：0未，1删除
+     */
+    @TableField("is_admin")
+    private Integer isAdmin;
 
 
     @Override
@@ -113,4 +121,15 @@ public class SysRole extends Model<SysRole> {
         return this.roleId;
     }
 
+    public void initAdmin(String name,Long realmId) {
+        this.createBy =LoginSession.getUserName();
+        this.isAdmin = CommonConest.base_admin;
+        this.remark ="系统管理员角色";
+        this.realmId =realmId;
+        this.status =0;
+        this.roleSort =0;
+        this.dataScope =0;
+        this.roleKey ="admin";
+        this.roleName =name;
+    }
 }

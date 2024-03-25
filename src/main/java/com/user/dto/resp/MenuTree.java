@@ -1,5 +1,6 @@
 package com.user.dto.resp;
 
+import com.user.common.tree.Tree;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,26 +18,14 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class MenuTree {
+public class MenuTree extends Tree<MenuTree> {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 菜单ID
-     */
-    private Long menuId;
-
-
 
     /**
      * 菜单名称
      */
     private String menuName;
-
-    /**
-     * 父菜单ID
-     */
-    private Long parentId;
 
     /**
      * 显示顺序
@@ -76,5 +65,4 @@ public class MenuTree {
      * 备注
      */
     private String remark;
-    List<MenuTree> childs;
 }

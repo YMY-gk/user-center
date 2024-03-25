@@ -27,8 +27,8 @@ public class LoginSession {
     public static void remove() {
         sessions.remove();
     }
-    public static Integer getRealm() {
-        return get().getRealm();
+    public static Long getRealm() {
+        return get().getRealmId();
     }
 
     public static Long getUserId() {

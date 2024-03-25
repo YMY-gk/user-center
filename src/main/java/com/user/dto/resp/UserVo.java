@@ -2,6 +2,8 @@ package com.user.dto.resp;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserVo {
 
@@ -91,7 +93,7 @@ public class UserVo {
 
     private Integer realmId;
 
-    private String deptId;
+    private List<Long> deptIds;
 
 }
 

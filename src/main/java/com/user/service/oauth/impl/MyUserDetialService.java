@@ -5,7 +5,7 @@ import com.user.config.Handler.UserInfo;
 import com.user.config.bean.InitializationBean;
 import com.user.domain.SysUser;
 import com.user.dto.resp.LoginUserInfo;
-import com.user.service.user.impl.SysUserService;
+import com.user.common.result.user.impl.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -40,6 +40,7 @@ public class MyUserDetialService implements UserDetailsService {
         Long realm =1L;
         LoginUserInfo userInfo = new LoginUserInfo();
         if (initializationBean.getUserName().equals(username)){
+            userInfo.setRealmId(1L);
            User user =  new UserInfo(username,new BCryptPasswordEncoder().encode(initializationBean.getPassword()),
                     AuthorityUtils.commaSeparatedStringToAuthorityList("admin"),userInfo);
             return user;

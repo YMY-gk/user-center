@@ -17,6 +17,7 @@
         <result column="update_time" property="updateTime" />
         <result column="remark" property="remark" />
         <result column="is_del" property="isDel" />
+        <result column="is_admin" property="isAdmin" />
     </resultMap>
     <!-- 通用查询映射结果 -->
     <resultMap id="ResultVoMap" type="com.user.dto.resp.RoleVo">
@@ -28,13 +29,24 @@
         <result column="data_scope" property="dataScope" />
         <result column="status" property="status" />
         <result column="remark" property="remark" />
+        <result column="is_admin" property="isAdmin" />
     </resultMap>
     <select id="getRoles" resultMap="ResultVoMap">
         select r.* from sys_role r WHERE r.is_del =  0
         <if test="req.realmId !=null and req.realmId!=''">
-            r.realm_id = #{req.realmId}
+            and r.realm_id = #{req.realmId}
+        </if>
+        <if test="req.roleName !=null and req.roleName!=''">
+            and r.role_name  like concat('%', #{req.roleName},'%')
         </if>
         ORDER BY r.realm_id ,r.role_sort
 
+    </select>
+
+    <select id="selectByAdmin" resultMap="BaseResultMap">
+        select r.* from sys_role r WHERE r.is_del =  0
+            and r.realm_id = #{realmId}
+            and r.is_admin =#{isAdmin}
+        limit 1
     </select>
 </mapper>

@@ -4,8 +4,72 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysMenuPermission">
-        <id column="menu_id" property="menuId" />
+        <id column="id" property="id" />
+        <result column="menu_id" property="menuId" />
         <result column="permission_id" property="permissionId" />
     </resultMap>
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.PermissionVo">
+        <result column="id" property="id" />
+        <result column="mpId" property="mpId" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="url" property="url" />
+        <result column="parms" property="parms" />
+        <result column="remark" property="remark" />
+        <result column="is_open" property="isOpen" />
+        <result column="source" property="source" />
+        <result column="menu_name" property="menuName" />
+    </resultMap>
+    <select id="getRolePermissions" resultMap ="ResultVoMap">
+        select 	m.menu_name,
+        p.id,
+        mp.id mpId,
+        p.source,
+        p.`name`,
+        p.type,
+        p.url,
+        p.parms,
+        p.create_by,
+        p.create_time,
+        p.remark,
+        p.is_open from sys_permission p
+        inner join  sys_menu_permission mp on p.id = mp.permission_id
+        inner join  sys_menu m on m.id = mp.menu_id
+        <where>
+             and  m.id =#{req.menuId}
+            <if test="req.name !=null">
+                and (name  like  concat('%', #{req.name},'%')
+                or url  like  concat('%', #{req.name},'%'))
+            </if>
+            <if test="req.type !=null">
+            and p.type = #{req.type}
+            </if>
+        </where>
+        order by  mp.id desc
 
+    </select>
+
+    <select id="getmenuIdPermissions" resultMap="ResultVoMap">
+        select m.menu_name,
+        p.id,
+        mp.id mpId,
+        p.source,
+        p.`name`,
+        p.type,
+        p.url,
+        p.parms,
+        p.create_by,
+        p.create_time,
+        p.remark,
+        p.is_open from sys_permission p
+        inner join sys_menu_permission mp on p.id = mp.permission_id
+        inner join sys_menu m on m.id = mp.menu_id
+        <where>
+            and m.id =#{req.id}
+            <foreach collection="req.permissionIds" item="item" open="and p.id   in(" separator="," close=")" index="index">
+                #{item}
+            </foreach>
+        </where>
+        order by mp.id desc
+    </select>
 </mapper>

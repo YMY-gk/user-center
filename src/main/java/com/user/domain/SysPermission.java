@@ -1,11 +1,8 @@
 package com.user.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +35,11 @@ public class SysPermission extends Model<SysPermission> {
      */
     @TableField("name")
     private String name;
-
+    /**
+     * 来源
+     */
+    @TableField("source")
+    private String source;
     /**
      * 请求类型
      */
@@ -60,20 +61,25 @@ public class SysPermission extends Model<SysPermission> {
     /**
      * 创建者
      */
-    @TableField("create_by")
+    @TableField(value = "create_by",fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      */
-    @TableField("create_time")
-    private LocalDateTime createTime;
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
+    private Long createTime;
 
     /**
      * 备注
      */
     @TableField("remark")
     private String remark;
+    /**
+     * 是否开发 0 否 1是
+     */
+    @TableField("is_open")
+    private Integer isOpen;
 
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class TokenInfo {
-    private Integer realm;
+    private Long realmId;
     private Long userId;
     private String userName;
     private String clientId;

@@ -4,21 +4,62 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysDept">
-        <id column="dept_id" property="deptId" />
+        <id column="id" property="id" />
         <result column="realm_id" property="realmId" />
         <result column="parent_id" property="parentId" />
-        <result column="ancestors" property="ancestors" />
         <result column="dept_name" property="deptName" />
         <result column="order_num" property="orderNum" />
         <result column="leader" property="leader" />
-        <result column="phone" property="phone" />
-        <result column="email" property="email" />
-        <result column="status" property="status" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
         <result column="updator" property="updator" />
         <result column="update_time" property="updateTime" />
         <result column="is_del" property="isDel" />
     </resultMap>
+    <resultMap id="TreeResultMap" type="com.user.dto.resp.DeptTree">
+        <id column="id" property="id" />
+        <result column="realm_id" property="realmId" />
+        <result column="parent_id" property="parentId" />
+        <result column="dept_name" property="deptName" />
+        <result column="order_num" property="orderNum" />
+        <result column="leader" property="leader" />
+    </resultMap>
+    <select id="getDepts" resultMap="TreeResultMap">
+        select  * from sys_dept
+        <where>
+            <if test="realmId !=null">
+               and realm_id =#{realmId}
+            </if>
+            and is_del = 0
+        </where>
 
+    </select>
+
+    <select id="getDeptById" resultMap="TreeResultMap">
+        select * from sys_dept where id =#{id}
+        <if test="realmId !=null">
+            and realm_id =#{realmId}
+            and is_del = 0
+        </if>
+    </select>
+
+    <select id="getDeptByParentId" resultMap="TreeResultMap">
+        select  * from sys_dept
+        <where>
+            <if test="realmId !=null">
+                and realm_id =#{realmId}
+            </if>
+            and is_del = 0
+        </where>
+    </select>
+
+    <select id="selectByAdmin" resultMap="BaseResultMap">
+        select  * from sys_dept
+        <where>
+                and realm_id =#{realmId}
+                and parent_id =#{parentId}
+                and is_del = 0
+        </where>
+        limit 1
+    </select>
 </mapper>

@@ -105,6 +105,13 @@ public class CooperateVo {
      * 是否合作 0 否 1是
      */
     private int isCooperate;
-
+    /**
+     * 审核备注
+     */
+    private String auditRemark;
+    /**
+     * 合作方介绍
+     */
+    private String remark;
 
 }

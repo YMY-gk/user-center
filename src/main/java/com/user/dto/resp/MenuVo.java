@@ -27,7 +27,7 @@ public class MenuVo{
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Long id;
 
     /**
      * 菜单名称
@@ -77,8 +77,5 @@ public class MenuVo{
      * 备注
      */
     private String remark;
-    /**
-     * 子集菜单
-     */
-    private List<MenuTree> childs;
+
 }

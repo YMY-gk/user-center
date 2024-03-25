@@ -12,6 +12,51 @@
         <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
         <result column="remark" property="remark" />
+        <result column="is_open" property="isOpen" />
+        <result column="source" property="source" />
     </resultMap>
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.PermissionVo">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="url" property="url" />
+        <result column="parms" property="parms" />
+        <result column="remark" property="remark" />
+        <result column="is_open" property="isOpen" />
+        <result column="source" property="source" />
+    </resultMap>
+    <select id="pagePermissions" resultMap="ResultVoMap">
+        select * from sys_permission
+        <where>
+            <if test="req.name !=null">
+                and (name  like  concat('%', #{req.name},'%')
+                or url  like  concat('%', #{req.name},'%'))
+            </if>
+            <if test="req.type !=null">
+                and type = #{req.type}
+            </if>
+        </where>
+        order by  create_time desc
 
+    </select>
+
+    <select id="getNotMenuPermissions" resultMap="ResultVoMap">
+        select * from sys_permission
+        <where>
+            <if test="req.name !=null">
+                and (name  like  concat('%', #{req.name},'%')
+                or url  like  concat('%', #{req.name},'%'))
+            </if>
+            <if test="req.type !=null">
+                and type = #{req.type}
+            </if>
+            <if test="req.ids !=null and req.ids.size>0">
+                <foreach collection="req.ids" item="item" open="and id not in(" separator="," close=")" index="index">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by  create_time desc
+
+    </select>
 </mapper>
