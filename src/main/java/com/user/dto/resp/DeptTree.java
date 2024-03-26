@@ -41,7 +41,7 @@ public class DeptTree extends Tree<DeptTree> {
      * 显示顺序
      */
     private Integer orderNum;
-
+    private Long userId;
     /**
      * 负责人
      */

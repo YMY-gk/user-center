@@ -31,7 +31,11 @@ public class SysDeptService extends ServiceImpl<SysDeptMapper, SysDept> implemen
         List<DeptTree> tree = this.recursionTreeApply(list, Lists.newArrayList(CommonConest.treeParentId));
         return tree;
     }
-
+    @Override
+    public List<DeptTree> getDeptLists(DeptReq req) {
+        List<DeptTree> list   = this.baseMapper.getDepts(req.getRealmId());
+        return list;
+    }
     @Override
     public DeptTree getDeptById(Long id) {
         DeptTree deptTree =  this.baseMapper.getDeptById(id);

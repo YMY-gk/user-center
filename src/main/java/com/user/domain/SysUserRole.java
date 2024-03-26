@@ -24,11 +24,15 @@ import lombok.experimental.Accessors;
 public class SysUserRole extends Model<SysUserRole> {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * 公司id
+     */
+    @TableId("id")
+    private Long id;
     /**
      * 用户ID
      */
-    @TableId("user_id")
+    @TableField("user_id")
     private Long userId;
 
     /**
@@ -37,11 +41,7 @@ public class SysUserRole extends Model<SysUserRole> {
     @TableField("role_id")
     private Long roleId;
 
-    /**
-     * 公司id
-     */
-    @TableField("realm_id")
-    private Long realmId;
+
 
 
     @Override

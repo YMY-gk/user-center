@@ -56,4 +56,8 @@ public class RoleVo  {
      * 备注
      */
     private String remark;
+    /**
+     * 用户id
+     */
+    private Long userId;
 }

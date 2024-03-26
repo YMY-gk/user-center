@@ -4,8 +4,28 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysUserDept">
-        <id column="user_id" property="userId" />
-        <result column="role_id" property="roleId" />
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
     </resultMap>
+    <resultMap id="TreeResultMap" type="com.user.dto.resp.DeptTree">
+        <id column="id" property="id" />
+        <result column="realm_id" property="realmId" />
+        <result column="parent_id" property="parentId" />
+        <result column="dept_name" property="deptName" />
+        <result column="order_num" property="orderNum" />
+        <result column="leader" property="leader" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+    <select id="getListByUserId" resultMap="TreeResultMap">
+        select d.*,u.user_id from
+        sys_user_dept u
+        inner join sys_dept d on u.dept_id = d.id
+        WHERE d.is_del =  0
+        <foreach collection="userIds" item="item" open="and d.id    in(" separator="," close=")" index="index">
+            #{item}
+        </foreach>
+        ORDER BY u.id
 
+    </select>
 </mapper>

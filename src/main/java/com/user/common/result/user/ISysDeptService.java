@@ -26,4 +26,6 @@ public interface ISysDeptService extends IService<SysDept> {
     void delDeptId(Long menuId, Long realmId);
 
     SysDept selectByAdmin(Long treeParentId, Long id);
+
+    List<DeptTree> getDeptLists(DeptReq req);
 }

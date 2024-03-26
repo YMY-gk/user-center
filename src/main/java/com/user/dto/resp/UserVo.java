@@ -10,11 +10,6 @@ public class UserVo {
     private Long userId;
 
     /**
-     * 部门ID
-     */
-    private Long deptName;
-
-    /**
      * 登录账号
      */
     private String loginName;
@@ -92,8 +87,16 @@ public class UserVo {
     private Integer isDel;
 
     private Integer realmId;
-
+    /**
+     * 部门
+     */
     private List<Long> deptIds;
+    private String deptNames;
+    /**
+     * 角色
+     */
+    private List<Long> roleIds;
+    private String roleNames;
 
 }
 

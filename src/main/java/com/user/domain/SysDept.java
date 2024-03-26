@@ -1,12 +1,9 @@
 package com.user.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.user.common.CommonConest;
@@ -60,36 +57,35 @@ public class SysDept extends Model<SysDept> {
      */
     @TableField("order_num")
     private Integer orderNum;
-
-    /**
+    /*
      * 负责人
      */
     @TableField("leader")
     private String leader;
-
     /**
      * 创建者
      */
-    @TableField("creator")
-    private String creator;
+    @TableField(value = "create_by",fill = FieldFill.INSERT)
+    private String createBy;
 
     /**
      * 创建时间
      */
-    @TableField("create_time")
+    @TableField(value ="create_time",fill = FieldFill.INSERT)
     private Long createTime;
 
     /**
      * 更新者
      */
-    @TableField("updator")
-    private String updator;
+    @TableField(value ="update_by",fill = FieldFill.INSERT_UPDATE)
+    private String updateBy;
 
     /**
      * 更新时间
      */
-    @TableField("update_time")
+    @TableField(value ="update_time",fill = FieldFill.INSERT_UPDATE)
     private Long updateTime;
+
 
     /**
      * 删除标志（0代表存在 1代表删除）
@@ -107,7 +103,7 @@ public class SysDept extends Model<SysDept> {
     public void initAdmin(Long realmId,String deptName) {
         this.setRealmId(realmId)
                 .setDeptName(deptName)
-                .setCreator( LoginSession.getUserName())
+                .setCreateBy( LoginSession.getUserName())
                 .setLeader( LoginSession.getUserName())
                 .setParentId(CommonConest.treeParentId)
                 .setOrderNum(0)

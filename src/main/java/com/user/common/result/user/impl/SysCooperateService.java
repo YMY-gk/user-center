@@ -68,9 +68,9 @@ public class SysCooperateService extends ServiceImpl<SysCooperateMapper, SysCoop
         }
         SysDept dept = sysDeptService.selectByAdmin(CommonConest.treeParentId,syscooperate.getId());
         if (ObjectUtil.isEmpty(dept)) {
-            SysRole role = new SysRole();
-            role.initAdmin(syscooperate.getName(), syscooperate.getId());
-            sysRoleMapper.insert(role);
+            dept = new SysDept();
+            dept.initAdmin(syscooperate.getId(),syscooperate.getName());
+            sysDeptService.save(dept);
         }
     }
 

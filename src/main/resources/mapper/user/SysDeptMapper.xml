@@ -10,9 +10,9 @@
         <result column="dept_name" property="deptName" />
         <result column="order_num" property="orderNum" />
         <result column="leader" property="leader" />
-        <result column="creator" property="creator" />
+        <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="updator" property="updator" />
+        <result column="update_by" property="updateBy" />
         <result column="update_time" property="updateTime" />
         <result column="is_del" property="isDel" />
     </resultMap>
@@ -37,10 +37,7 @@
 
     <select id="getDeptById" resultMap="TreeResultMap">
         select * from sys_dept where id =#{id}
-        <if test="realmId !=null">
-            and realm_id =#{realmId}
             and is_del = 0
-        </if>
     </select>
 
     <select id="getDeptByParentId" resultMap="TreeResultMap">

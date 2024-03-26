@@ -24,24 +24,22 @@ import lombok.experimental.Accessors;
 public class SysUserDept extends Model<SysUserDept> {
 
     private static final long serialVersionUID = 1L;
+    @TableId("id")
+    private Long id;
 
     /**
      * 用户ID
      */
-    @TableId("user_id")
+    @TableField("user_id")
     private Long userId;
 
     /**
      * 角色ID
      */
-    @TableField("role_id")
-    private Long roleId;
+    @TableField("dept_id")
+    private Long deptId;
 
-    /**
-     * 公司id
-     */
-    @TableField("realm_id")
-    private Long realmId;
+
 
 
     @Override

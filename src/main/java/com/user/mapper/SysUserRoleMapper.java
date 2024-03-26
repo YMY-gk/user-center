@@ -2,6 +2,10 @@ package com.user.mapper;
 
 import com.user.domain.SysUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.user.dto.resp.RoleVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
+    List<RoleVo> getListByUserId(@Param("userIds") List<Long> userIds);
 }

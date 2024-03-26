@@ -1,6 +1,7 @@
 package com.user.controller;
 
 
+import com.user.common.CommonConest;
 import com.user.common.result.Result;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysDept;
@@ -35,12 +36,24 @@ public class SysDeptController {
     /**
      * 获取部门列表信息
      */
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/tree")
     @ApiOperation("获取部门列表信息")
     public Result<List<DeptTree> > getDepts(@RequestBody DeptReq req) {
-        Long realmId = Long.valueOf(request.getHeader("realmId"));
-
+        Long realmId = LoginSession.getRealm();
+        if (realmId.compareTo(CommonConest.base_realm)!=0){
+            req.setRealmId(realmId);
+        }
         List<DeptTree>  sysMenus= sysDeptService.getDepts(req);
+        return ResultUtil.OK(sysMenus);
+    }
+    @PostMapping(value = "/list")
+    @ApiOperation("获取部门列表信息")
+    public Result<List<DeptTree> > getDeptLists(@RequestBody DeptReq req) {
+        Long realmId = LoginSession.getRealm();
+        if (realmId.compareTo(CommonConest.base_realm)!=0){
+            req.setRealmId(realmId);
+        }
+        List<DeptTree>  sysMenus= sysDeptService.getDeptLists(req);
         return ResultUtil.OK(sysMenus);
     }
     @GetMapping(value = "/get")
@@ -52,7 +65,7 @@ public class SysDeptController {
     @GetMapping(value = "/childs/get")
     @ApiOperation("根据部门id获取子部门数据")
     public Result<List<DeptTree> > getDeptByParentId(@RequestParam(required = true,value = "id") Long  id) {
-        Long realmId = Long.valueOf(request.getHeader("realmId"));
+        Long realmId = LoginSession.getRealm();
         List<DeptTree>  sysMenus = sysDeptService.getDeptByParentId(id,realmId);
         return ResultUtil.OK(sysMenus);
     }
@@ -86,7 +99,7 @@ public class SysDeptController {
     @GetMapping(value = "/del")
     @ApiOperation("删除部门数据")
     public Result<Object> delDeptId(@RequestParam(required = true,value = "id") Long  id) {
-        Long realmId = Long.valueOf(request.getHeader("realmId"));
+        Long realmId = LoginSession.getRealm();
         sysDeptService.delDeptId(id,realmId);
         return ResultUtil.OK();
     }

@@ -4,9 +4,31 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.user.domain.SysUserRole">
-        <id column="user_id" property="userId" />
+        <id column="id" property="id" />
         <result column="role_id" property="roleId" />
-        <result column="realm_id" property="realmId" />
+        <result column="user_id" property="userId" />
     </resultMap>
+    <resultMap id="ResultVoMap" type="com.user.dto.resp.RoleVo">
+        <id column="role_id" property="roleId" />
+        <result column="realm_id" property="realmId" />
+        <result column="role_name" property="roleName" />
+        <result column="role_key" property="roleKey" />
+        <result column="role_sort" property="roleSort" />
+        <result column="data_scope" property="dataScope" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="is_admin" property="isAdmin" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+    <select id="getListByUserId" resultMap="ResultVoMap">
+        select r.*,u.user_id from
+        sys_user_role u
+        inner join sys_role r on u.role_id = r.role_id
+        WHERE r.is_del =  0
+        <foreach collection="userIds" item="item" open="and u.user_id    in(" separator="," close=")" index="index">
+            #{item}
+        </foreach>
+        ORDER BY u.id
 
+    </select>
 </mapper>

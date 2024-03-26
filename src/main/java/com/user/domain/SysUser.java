@@ -1,13 +1,12 @@
 package com.user.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -115,37 +114,37 @@ public class SysUser extends Model<SysUser> {
      * 最后登录时间
      */
     @TableField("login_date")
-    private LocalDateTime loginDate;
+    private Long loginDate;
 
     /**
      * 密码最后更新时间
      */
-    @TableField("pwd_update_date")
-    private LocalDateTime pwdUpdateDate;
+    @TableField(value = "pwd_update_date",fill = FieldFill.INSERT)
+    private Long pwdUpdateDate;
 
     /**
      * 创建者
      */
-    @TableField("create_by")
+    @TableField(value = "create_by",fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      */
-    @TableField("create_time")
-    private LocalDateTime createTime;
+    @TableField(value ="create_time",fill = FieldFill.INSERT)
+    private Long createTime;
 
     /**
      * 更新者
      */
-    @TableField("update_by")
+    @TableField(value = "update_by",fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
      * 更新时间
      */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
+    @TableField(value = "update_time",fill = FieldFill.UPDATE)
+    private Long updateTime;
 
     /**
      * 备注
@@ -159,7 +158,16 @@ public class SysUser extends Model<SysUser> {
     @TableField("is_del")
     @TableLogic
     private Integer isDel;
-
+    /**
+     * 部门
+     */
+    @TableField(exist = false)
+    private List<Long> deptIds;
+    /**
+     * 角色
+     */
+    @TableField(exist = false)
+    private List<Long> roleIds;
 
     @Override
     protected Serializable pkVal() {

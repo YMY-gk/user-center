@@ -2,6 +2,10 @@ package com.user.common.result.user;
 
 import com.user.domain.SysUserDept;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.user.dto.resp.DeptTree;
+import com.user.dto.resp.DeptVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserDeptService extends IService<SysUserDept> {
 
+    void edit(List<Long> deptIds, Long userId);
+
+    List<DeptTree> getListByUserId(List<Long> userId);
 }
