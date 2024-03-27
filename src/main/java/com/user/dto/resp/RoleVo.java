@@ -60,4 +60,6 @@ public class RoleVo  {
      * 用户id
      */
     private Long userId;
+
+    private List<Long> menuIds;
 }

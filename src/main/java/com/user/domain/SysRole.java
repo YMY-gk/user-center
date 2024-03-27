@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
 
 import com.user.common.CommonConest;
 import com.user.config.bean.LoginSession;
@@ -114,7 +115,8 @@ public class SysRole extends Model<SysRole> {
      */
     @TableField("is_admin")
     private Integer isAdmin;
-
+    @TableField(exist = false)
+    private List<Long> menuIds;
 
     @Override
     protected Serializable pkVal() {

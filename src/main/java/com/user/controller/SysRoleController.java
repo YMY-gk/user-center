@@ -46,7 +46,7 @@ public class SysRoleController {
     @PostMapping(value = "/add")
     @ApiOperation("新增角色")
     public Result<Object> addRole(@RequestBody SysRole role) {
-        sysRoleService.save(role);
+        sysRoleService.saveOrEdit(role);
         return ResultUtil.OK();
     }
     /**
@@ -55,7 +55,7 @@ public class SysRoleController {
     @PostMapping(value = "/edit")
     @ApiOperation("修改角色数据")
     public Result<Object> editRole(@RequestBody SysRole role) {
-        sysRoleService.updateById(role);
+        sysRoleService.saveOrEdit(role);
         return ResultUtil.OK();
     }
     /**
@@ -82,7 +82,7 @@ public class SysRoleController {
     @PostMapping(value = "/menu/operate")
     @ApiOperation("角色菜单绑定")
     public Result<Object> operateRoleMenu(@RequestBody RoleReq req) {
-        sysRoleMenuService.operateRoleMenu(req);
+        sysRoleMenuService.operateRoleMenu(req.getIds(),req.getRoleId());
         return ResultUtil.OK();
     }
 }

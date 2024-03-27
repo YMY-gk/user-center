@@ -104,6 +104,7 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
         String pwd =initializationBean.getCustomPwd()+salt;
         pwd = passwordEncoder.encode(pwd);
         user.setPassword(pwd);
+        user.setPwdUpdateDate(System.currentTimeMillis());
         this.saveOrUpdate(user);
         sysUserRoleService.edit(user.getRoleIds(),user.getUserId());
         sysUserDeptService.edit(user.getDeptIds(),user.getUserId());
@@ -114,6 +115,10 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
         if (ObjectUtils.isEmpty(sysUser)){
             return ResultUtil.ERROR(CommonCode.RECORD_NO_EXIST);
         }
+        pwd =pwd+sysUser.getSalt();
+        pwd = passwordEncoder.encode(pwd);
+        sysUser.setPwdUpdateDate(System.currentTimeMillis());
+        sysUser.setPassword(pwd);
         this.baseMapper.updateById(sysUser);
         return ResultUtil.OK();
     }

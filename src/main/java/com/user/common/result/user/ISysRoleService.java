@@ -20,4 +20,6 @@ public interface ISysRoleService extends IService<SysRole> {
     List<RoleVo> getRoles(RoleReq req);
 
     void dels(List<Long> ids);
+
+    void saveOrEdit(SysRole role);
 }

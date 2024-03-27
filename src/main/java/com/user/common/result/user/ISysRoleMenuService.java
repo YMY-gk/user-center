@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.user.dto.req.RoleReq;
 import com.user.dto.resp.MenuVo;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,5 +20,8 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
     List<MenuVo> getRoleMenus(RoleReq req);
 
-    void operateRoleMenu(RoleReq req);
+
+    void operateRoleMenu(List<Long> menuIds, Long roleId);
+
+    List<SysRoleMenu> getListByRoleIds(List<Long> roleIds);
 }

@@ -28,20 +28,20 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
     /**
      * 角色ID
      */
-    @TableId("role_id")
+    @TableField("role_id")
     private Long roleId;
 
     /**
      * 菜单ID
      */
-    @TableField("id")
+    @TableId("id")
     private Long id;
 
     /**
      * 公司id
      */
-    @TableField("realm_id")
-    private Long realmId;
+    @TableField("menu_id")
+    private Long menuId;
 
 
     @Override
