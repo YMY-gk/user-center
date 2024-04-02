@@ -158,8 +158,9 @@ public class SysDictTypeController {
      */
     @PostMapping(value = "/data/type")
     @ApiOperation("根据字典类型查询字典数据")
-    public Result<List<SysDictData>> getDictDataByType(@RequestParam(required = true,value = "type") String type) {
-        List<SysDictData> list  = sysDictDataService.getDictDataByType(type);
+    public Result<List<SysDictData>> getDictDataByType(@RequestParam(required = true,value = "type") String type,
+                @RequestParam(required = false,value = "realm") Long realm) {
+        List<SysDictData> list  = sysDictDataService.getDictDataByType(type,realm);
         return ResultUtil.OK(list);
     }
 }

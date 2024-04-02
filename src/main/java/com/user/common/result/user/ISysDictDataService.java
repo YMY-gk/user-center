@@ -3,7 +3,6 @@ package com.user.common.result.user;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.domain.SysDictData;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.user.domain.SysDictType;
 import com.user.dto.req.DictDataReq;
 import com.user.dto.resp.DictDataVo;
 
@@ -33,5 +32,5 @@ public interface ISysDictDataService extends IService<SysDictData> {
 
     void delDictTypeByTypes(List<String> types);
 
-    List<SysDictData> getDictDataByType(String type);
+    List<SysDictData> getDictDataByType(String type, Long realm);
 }

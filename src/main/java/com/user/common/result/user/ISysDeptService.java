@@ -28,4 +28,6 @@ public interface ISysDeptService extends IService<SysDept> {
     SysDept selectByAdmin(Long treeParentId, Long id);
 
     List<DeptTree> getDeptLists(DeptReq req);
+
+    List<Long> getDeptsById(Long deptId, Long realm);
 }

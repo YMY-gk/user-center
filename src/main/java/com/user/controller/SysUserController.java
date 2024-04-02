@@ -1,12 +1,16 @@
 package com.user.controller;
 
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Lists;
 import com.user.common.result.PageResult;
 import com.user.common.result.Result;
+import com.user.common.result.user.ISysDeptService;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysUser;
 import com.user.dto.req.UserReq;
+import com.user.dto.resp.DeptTree;
 import com.user.dto.resp.LoginUserInfo;
 import com.user.dto.resp.UserInfoDateil;
 import com.user.dto.resp.UserVo;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -35,6 +40,8 @@ public class SysUserController {
 
     @Autowired
     SysUserService userService;
+    @Autowired
+    ISysDeptService sysDeptService;
     /**
      * 获取用户信息
      */
@@ -53,11 +60,33 @@ public class SysUserController {
     @PostMapping("/list")
     @ApiOperation("获取员工列表")
     public Result<List<UserVo>> getList(@RequestBody UserReq user){
+        Long realm = user.getRealmId();
+        if (ObjectUtil.isEmpty(realm)){
+            realm = LoginSession.getRealm();
+        }
+        if (ObjectUtil.isNotEmpty(user.getDeptId())) {
+            List<Long> deptIds= sysDeptService.getDeptsById(user.getDeptId(), realm);
+            if (CollUtil.isNotEmpty(deptIds)) {
+                user.setDeptIds(deptIds);
+            }
+        }
+        user.setRealmId(realm);
         return ResultUtil.OK(userService.getList(user));
     }
     @PostMapping("/page")
     @ApiOperation("获取员工分页列表")
     public PageResult<UserVo> getPage(@RequestBody UserReq user){
+        Long realm = user.getRealmId();
+        if (ObjectUtil.isEmpty(realm)){
+            realm = LoginSession.getRealm();
+        }
+        if (ObjectUtil.isNotEmpty(user.getDeptId())) {
+            List<Long> deptIds= sysDeptService.getDeptsById(user.getDeptId(), realm);
+            if (CollUtil.isNotEmpty(deptIds)) {
+                user.setDeptIds(deptIds);
+            }
+        }
+        user.setRealmId(realm);
         return userService.getPage(user);
     }
     @PostMapping("/add")

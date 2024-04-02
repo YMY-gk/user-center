@@ -3,6 +3,8 @@ package com.user.dto.req;
 import com.user.dto.base.BaseParam;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserReq  extends BaseParam {
 
@@ -11,7 +13,9 @@ public class UserReq  extends BaseParam {
     /**
      * 部门ID
      */
-    private Long deptName;
+    private Long deptId;
+
+    private List<Long> deptIds;
 
     /**
      * 用户昵称

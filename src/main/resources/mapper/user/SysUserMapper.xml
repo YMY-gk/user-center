@@ -53,12 +53,18 @@
     </select>
 
     <select id="queryList" resultMap="ShowResultMap">
-        select * from sys_user u
+        select u.* from sys_user u
+        left join   sys_user_dept ud on u.user_id = ud.user_id
         <where>
             <if test="user.realmId !=null">
-                and realm_id =#{user.realmId}
+                and u.realm_id =#{user.realmId}
             </if>
-            and is_del = 0
+            <if test="user.deptIds!=null and user.deptIds.size>0">
+                <foreach collection="user.deptIds" item="item" open="and ud.dept_id  in(" separator="," close=")" index="index">
+                    #{item}
+                </foreach>
+            </if>
+            and u.is_del = 0
         </where>
     </select>
 </mapper>

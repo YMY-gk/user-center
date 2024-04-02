@@ -1,6 +1,7 @@
 package com.user.common.result.user.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.common.CommonConest;
@@ -78,8 +79,11 @@ public class SysDictDataService extends ServiceImpl<SysDictDataMapper, SysDictDa
     }
 
     @Override
-    public List<SysDictData> getDictDataByType(String type) {
-        List<SysDictData> list= this.baseMapper.getDictDataByType(type,LoginSession.getRealm());
+    public List<SysDictData> getDictDataByType(String type, Long realm) {
+        if(ObjectUtil.isEmpty(realm)){
+            realm= LoginSession.getRealm();
+        }
+        List<SysDictData> list= this.baseMapper.getDictDataByType(type,realm);
         if (CollUtil.isEmpty(list)){
             list= this.baseMapper.getDictDataByType(type,CommonConest.base_realm);
         }

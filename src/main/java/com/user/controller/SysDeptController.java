@@ -64,8 +64,8 @@ public class SysDeptController {
     }
     @GetMapping(value = "/childs/get")
     @ApiOperation("根据部门id获取子部门数据")
-    public Result<List<DeptTree> > getDeptByParentId(@RequestParam(required = true,value = "id") Long  id) {
-        Long realmId = LoginSession.getRealm();
+    public Result<List<DeptTree> > getDeptByParentId(@RequestParam(required = true,value = "id") Long  id,
+                                                     @RequestParam(required = false,value = "realmId") Long  realmId) {
         List<DeptTree>  sysMenus = sysDeptService.getDeptByParentId(id,realmId);
         return ResultUtil.OK(sysMenus);
     }

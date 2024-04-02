@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Lists;
 import com.user.common.CommonConest;
 import com.user.common.result.user.ISysDeptService;
+import com.user.config.bean.LoginSession;
 import com.user.domain.SysDept;
 import com.user.dto.req.DeptReq;
 import com.user.dto.resp.DeptTree;
@@ -11,6 +12,7 @@ import com.user.mapper.SysDeptMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,30 @@ public class SysDeptService extends ServiceImpl<SysDeptMapper, SysDept> implemen
         List<DeptTree> list   = this.baseMapper.getDepts(req.getRealmId());
         return list;
     }
+
+    @Override
+    public List<Long> getDeptsById(Long deptId, Long realmId) {
+        List<DeptTree> list   = this.baseMapper.getDeptByParentId(realmId);
+        List<Long> tree = this.recursionTreeApplyIds(list, Lists.newArrayList(deptId));
+        return tree;
+    }
+
+    private List<Long> recursionTreeApplyIds(List<DeptTree> list, List<Long> parentIds) {
+        List<DeptTree> parentVos =list.stream().filter(x->parentIds.contains(x.getParentId())).collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(parentVos)){
+            return parentIds;
+        }
+        List<Long> ids = parentVos.stream().map(DeptTree::getId).collect(Collectors.toList());
+        List<DeptTree> residue  =list.stream().filter(x->!ids.contains(x.getId())).collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(residue)){
+             parentIds.addAll(ids);
+             return  parentIds;
+        }
+        List<Long> tree = this.recursionTreeApplyIds(residue,ids);
+        parentIds.addAll(tree);
+        return parentIds;
+    }
+
     @Override
     public DeptTree getDeptById(Long id) {
         DeptTree deptTree =  this.baseMapper.getDeptById(id);
