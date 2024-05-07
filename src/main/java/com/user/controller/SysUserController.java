@@ -7,13 +7,11 @@ import com.google.common.collect.Lists;
 import com.user.common.result.PageResult;
 import com.user.common.result.Result;
 import com.user.common.result.user.ISysDeptService;
+import com.user.common.result.user.impl.SysMenuService;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysUser;
 import com.user.dto.req.UserReq;
-import com.user.dto.resp.DeptTree;
-import com.user.dto.resp.LoginUserInfo;
-import com.user.dto.resp.UserInfoDateil;
-import com.user.dto.resp.UserVo;
+import com.user.dto.resp.*;
 import com.user.common.result.user.impl.SysUserService;
 import com.user.util.base.ResultUtil;
 import io.swagger.annotations.Api;
@@ -42,6 +40,8 @@ public class SysUserController {
     SysUserService userService;
     @Autowired
     ISysDeptService sysDeptService;
+    @Autowired
+    SysMenuService sysMenuService;
     /**
      * 获取用户信息
      */
@@ -54,7 +54,14 @@ public class SysUserController {
         userInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         userInfo.setIntroduction("I am a super administrator");
         userInfo.setRoles(Lists.newArrayList("admin"));
+        userInfo.setRealm(LoginSession.getRealm());
         return ResultUtil.OK(userInfo);
+
+    }
+    @GetMapping(value = "/menus")
+    @ApiOperation("获取用户菜单")
+    public Result<List<MenuTree>> getUserMenus()  {
+        return sysMenuService.getRoleMenusByUser();
 
     }
     @PostMapping("/list")

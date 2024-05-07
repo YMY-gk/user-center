@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.common.CommonConest;
+import com.user.common.result.Result;
 import com.user.common.result.user.ISysDictDataService;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysDictData;
@@ -12,6 +13,7 @@ import com.user.dto.req.DictDataReq;
 import com.user.dto.resp.DictDataVo;
 import com.user.mapper.SysDictDataMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.user.util.base.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +33,14 @@ public class SysDictDataService extends ServiceImpl<SysDictDataMapper, SysDictDa
     @Override
     public Page<DictDataVo> getPageDicts(DictDataReq req) {
         Page<DictDataVo> page = new Page<>(req.getPageIndex(),req.getPageSize());
-        Page<DictDataVo> sysDictTypePage = this.baseMapper.getPageDicts(page,req);
+        Page<DictDataVo> sysDictTypePage = null;
+        if (ObjectUtil.isEmpty(LoginSession.getRealm())) {
+             sysDictTypePage = this.baseMapper.getPageDicts(page, req);
+        }else {
+
+            sysDictTypePage = this.baseMapper.getRealmPageDicts(page, req,LoginSession.getRealm());
+
+        }
         return sysDictTypePage;
     }
 
@@ -43,6 +52,9 @@ public class SysDictDataService extends ServiceImpl<SysDictDataMapper, SysDictDa
 
     @Override
     public void addDictType(SysDictData dictData) {
+        if (ObjectUtil.isNotEmpty(LoginSession.getRealm())){
+            dictData.setRealmId(LoginSession.getRealm());
+        }
         this.baseMapper.insert(dictData);
     }
 
@@ -52,8 +64,15 @@ public class SysDictDataService extends ServiceImpl<SysDictDataMapper, SysDictDa
     }
 
     @Override
-    public void editDictType(SysDictData dictData) {
+    public Result<Object> editDictType(SysDictData dictData) {
+        SysDictData sysDictData = this.baseMapper.selectById(dictData.getId());
+
+        if (ObjectUtil.isNotEmpty(LoginSession.getRealm())&&sysDictData.getRealmId()!=LoginSession.getRealm()){
+            return ResultUtil.ERROR(401,null,"参数异常");
+        }
         this.baseMapper.updateById(dictData);
+        return ResultUtil.OK();
+
     }
 
     @Override

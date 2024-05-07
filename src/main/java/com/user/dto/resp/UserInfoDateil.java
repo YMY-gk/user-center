@@ -9,4 +9,5 @@ public class UserInfoDateil {
     String introduction;
     String avatar;
     String name;
+    Long realm;
 }

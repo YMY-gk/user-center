@@ -51,6 +51,17 @@
     <select id="selectByName" resultMap="BaseResultMap">
         select * from sys_user u where  u.login_name = #{username}  and u.status =0 and is_del = 0 limit 1
     </select>
+    <select id="selectUsersByName" resultMap="BaseResultMap">
+        select * from sys_user u where  u.login_name = #{username}
+                                    <if test="id !=null">
+                                        and u.user_id  !=#{id}
+                                    </if>
+                                    <if test="realmId !=null">
+                                        and u.realm_id =#{realmId}
+                                    </if>
+                                   and u.status =0
+                                   and is_del = 0
+    </select>
 
     <select id="queryList" resultMap="ShowResultMap">
         select u.* from sys_user u

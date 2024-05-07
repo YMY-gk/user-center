@@ -1,6 +1,7 @@
 package com.user.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.user.common.CommonConest;
 import com.user.common.result.Result;
 import com.user.config.bean.LoginSession;
@@ -40,7 +41,7 @@ public class SysDeptController {
     @ApiOperation("获取部门列表信息")
     public Result<List<DeptTree> > getDepts(@RequestBody DeptReq req) {
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(CommonConest.base_realm)!=0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             req.setRealmId(realmId);
         }
         List<DeptTree>  sysMenus= sysDeptService.getDepts(req);
@@ -50,7 +51,7 @@ public class SysDeptController {
     @ApiOperation("获取部门列表信息")
     public Result<List<DeptTree> > getDeptLists(@RequestBody DeptReq req) {
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(CommonConest.base_realm)!=0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             req.setRealmId(realmId);
         }
         List<DeptTree>  sysMenus= sysDeptService.getDeptLists(req);
@@ -66,6 +67,9 @@ public class SysDeptController {
     @ApiOperation("根据部门id获取子部门数据")
     public Result<List<DeptTree> > getDeptByParentId(@RequestParam(required = true,value = "id") Long  id,
                                                      @RequestParam(required = false,value = "realmId") Long  realmId) {
+        if (ObjectUtil.isEmpty(realmId)){
+            realmId = LoginSession.getRealm();
+        }
         List<DeptTree>  sysMenus = sysDeptService.getDeptByParentId(id,realmId);
         return ResultUtil.OK(sysMenus);
     }
@@ -75,14 +79,14 @@ public class SysDeptController {
     @PostMapping(value = "/add")
     @ApiOperation("新增部门信息")
     public Result<Object> addDept(@RequestBody SysDept sysDept) {
-
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)!=0){
+        if (ObjectUtil.isEmpty(sysDept.getRealmId())){
             sysDept.setRealmId(realmId);
         }
-
-        sysDeptService.save(sysDept);
-        return ResultUtil.OK();
+        if (ObjectUtil.isNotEmpty(realmId)&& realmId!=sysDept.getRealmId()){
+            return ResultUtil.ERROR(202,null,"操做记录不存在");
+        }
+        return  sysDeptService.addDept(sysDept);
     }
     /**
      * 修改菜单
@@ -90,8 +94,7 @@ public class SysDeptController {
     @PostMapping(value = "/edit")
     @ApiOperation("编辑部门")
     public Result<Object> editDept(@RequestBody SysDept sysDept) {
-        sysDeptService.updateById(sysDept);
-        return ResultUtil.OK();
+        return  sysDeptService.editDept(sysDept);
     }
     /**
      * 修改菜单

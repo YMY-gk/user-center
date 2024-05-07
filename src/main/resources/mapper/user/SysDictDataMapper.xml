@@ -58,7 +58,61 @@
             </where>
         order by  t.id desc ,d.dict_sort asc
     </select>
+    <select id="getRealmPageDicts" resultMap="ResultVoMap">
+        select * from (
+        select d.id,d.dict_sort,d.dict_label,d.dict_value,
+        d.dict_type,d.is_default,d.remark,d.realm_id,
+        c.name,t.dict_name
+        from sys_dict_data d
+        inner join sys_cooperate c on d.realm_id = c.id and c.audit_state = 1 and c.is_del = 0
+        inner join sys_dict_type t on t.dict_type = d.dict_type and t.is_del = 0
+        <where>
+            and d.is_del = 0
+            <if test="req.dictLabel !=null and req.dictLabel!=''">
+                and d.dict_label like concat('%', #{req.dictLabel},'%')
+            </if>
+            <if test="req.dictValue !=null and req.dictValue!=''">
+                and d.dict_value like concat('%', #{req.dictValue},'%')
+            </if>
+            <if test="req.dictType !=null and req.dictType!=''">
+                and d.dict_type =#{req.dictType}
+            </if>
+            <if test="req.isDefault !=null and req.isDefault!=''">
+                and d.is_default =#{req.isDefault}
+            </if>
+                and d.realm_id =#{realmId}
+        </where>
+        union all
+        select d.id,d.dict_sort,d.dict_label,d.dict_value,
+        d.dict_type,d.is_default,d.remark,d.realm_id,
+        c.name,t.dict_name
+        from sys_dict_data d
+        inner join sys_cooperate c on d.realm_id = c.id and c.audit_state = 1 and c.is_del = 0
+        inner join sys_dict_type t on t.dict_type = d.dict_type and t.is_del = 0
+        <where>
+            and d.is_del = 0
+            <if test="req.dictLabel !=null and req.dictLabel!=''">
+                and d.dict_label like concat('%', #{req.dictLabel},'%')
+            </if>
+            <if test="req.dictValue !=null and req.dictValue!=''">
+                and d.dict_value like concat('%', #{req.dictValue},'%')
+            </if>
+            <if test="req.dictType !=null and req.dictType!=''">
+                and d.dict_type =#{req.dictType}
+            </if>
+            <if test="req.isDefault !=null and req.isDefault!=''">
+                and d.is_default =#{req.isDefault}
+            </if>
+            and d.realm_id = 1
+            and not EXISTS(
+            select * from  sys_dict_data dd where dd.dict_type = t.dict_type and  dd.is_del = 0 and dd.realm_id =#{realmId}
+            )
+        </where>
 
+
+        ) tt
+        order by  tt.id desc ,tt.dict_sort asc
+    </select>
     <select id="listDictData" resultMap="BaseResultMap">
         select  * from  sys_dict_data
         <where>

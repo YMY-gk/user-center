@@ -76,8 +76,7 @@ public class SysDictTypeController {
     @PostMapping(value = "/add")
     @ApiOperation("删除部门数据")
     public Result<Object> addDictType(@RequestBody SysDictType dictType) {
-        sysDictTypeService.addDictType(dictType);
-        return ResultUtil.OK();
+        return  sysDictTypeService.addDictType(dictType);
     }
     /**
      * 修改字典类型
@@ -85,8 +84,7 @@ public class SysDictTypeController {
     @PostMapping(value = "/edit")
     @ApiOperation("编辑字典类型数据")
     public Result<Object> editDictType(@RequestBody SysDictType dictType) {
-        sysDictTypeService.editDictType(dictType);
-        return ResultUtil.OK();
+        return sysDictTypeService.editDictType(dictType);
     }
     /**
      * 删除数据
@@ -132,8 +130,7 @@ public class SysDictTypeController {
     @PostMapping(value = "/data/edit")
     @ApiOperation("编辑字典数据")
     public Result<Object> editDictData(@RequestBody SysDictData dictType) {
-        sysDictDataService.editDictType(dictType);
-        return ResultUtil.OK();
+        return   sysDictDataService.editDictType(dictType);
     }
     /**
      * 删除数据

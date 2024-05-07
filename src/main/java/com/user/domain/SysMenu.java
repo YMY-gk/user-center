@@ -32,12 +32,6 @@ public class SysMenu extends Model<SysMenu> {
     private Long id;
 
     /**
-     * 公司id
-     */
-    @TableField("realm_id")
-    private Long realmId;
-
-    /**
      * 菜单名称
      */
     @TableField("menu_name")

@@ -1,5 +1,6 @@
 package com.user.common.result.user;
 
+import com.user.common.result.Result;
 import com.user.domain.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.user.dto.req.DeptReq;
@@ -30,4 +31,8 @@ public interface ISysDeptService extends IService<SysDept> {
     List<DeptTree> getDeptLists(DeptReq req);
 
     List<Long> getDeptsById(Long deptId, Long realm);
+
+    Result<Object> addDept(SysDept sysDept);
+
+    Result<Object> editDept(SysDept sysDept);
 }

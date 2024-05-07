@@ -1,8 +1,10 @@
 package com.user.common.result.user.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Lists;
 import com.user.common.CommonConest;
+import com.user.common.result.Result;
 import com.user.common.result.user.ISysDeptService;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysDept;
@@ -10,9 +12,9 @@ import com.user.dto.req.DeptReq;
 import com.user.dto.resp.DeptTree;
 import com.user.mapper.SysDeptMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.user.util.base.ResultUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,27 @@ import java.util.stream.Collectors;
 @Service
 public class SysDeptService extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
+
+
+    @Override
+    public Result<Object> addDept(SysDept sysDept) {
+        this.save(sysDept);
+        return ResultUtil.OK();
+    }
+
+    @Override
+    public Result<Object> editDept(SysDept sysDept) {
+        SysDept dept = this.getById(sysDept.getId());
+        Long realmId = LoginSession.getRealm();
+        if (ObjectUtil.isNotEmpty(realmId)&&dept.getRealmId().compareTo(realmId)!=0){
+            return ResultUtil.ERROR(202,null,"操做记录不存在");
+        }
+        if (dept.getRealmId()!=sysDept.getRealmId()){
+            return ResultUtil.ERROR(202,null,"操做记录不存在");
+        }
+        this.updateById(sysDept);
+        return ResultUtil.OK();
+    }
     @Override
     public List<DeptTree> getDepts(DeptReq req) {
         List<DeptTree> list   = this.baseMapper.getDepts(req.getRealmId());
@@ -64,7 +87,7 @@ public class SysDeptService extends ServiceImpl<SysDeptMapper, SysDept> implemen
 
     @Override
     public DeptTree getDeptById(Long id) {
-        DeptTree deptTree =  this.baseMapper.getDeptById(id);
+        DeptTree deptTree =  this.baseMapper.getDeptById(id,LoginSession.getRealm());
         return deptTree;
     }
 

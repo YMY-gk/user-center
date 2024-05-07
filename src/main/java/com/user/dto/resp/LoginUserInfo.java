@@ -62,4 +62,8 @@ public class LoginUserInfo {
      * 头像路径
      */
     private String avatar;
+    /**
+     * 角色
+     */
+    private List<Long> roles;
 }

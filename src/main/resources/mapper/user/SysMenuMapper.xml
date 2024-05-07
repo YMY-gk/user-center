@@ -70,4 +70,46 @@
             m.parent_id =#{id}
         </where>
     </select>
+
+    <select id="getRoleMenus" resultMap="ResultTreeMap">
+        select m.* from sys_menu  m
+        inner join  sys_role_menu rm on m.id = rm.menu_id
+        inner join  sys_role r on r.role_id = rm.role_id
+        <where>
+            is_del = 0 and  r.is_admin = 1 and r.realm_id = #{realmId}
+        </where>
+        order by order_num
+    </select>
+
+    <select id="getRoleMenusByUser" resultMap="ResultTreeMap">
+        select distinct m.* from sys_menu  m
+        left join  sys_role_menu rm on m.id = rm.menu_id
+        left join  sys_role r on r.role_id = rm.role_id
+        <where>
+            m.is_del = 0
+            <if test="realmId !=null">
+            and r.realm_id = #{realmId}
+            </if>
+            <if test="roleIds !=null and roleIds.size>0">
+                <foreach collection="roleIds" item="item" open="and r.role_id   in(" separator="," close=")" index="index">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by order_num
+    </select>
+
+    <select id="getInitMenus" resultMap="ResultTreeMap">
+        select DISTINCT m.* from sys_menu  m
+        inner join  sys_role_menu rm on m.id = rm.menu_id
+        inner join  sys_role r on r.role_id = rm.role_id
+
+        <where>
+            and m.is_del = 0
+            and   r.realm_id = #{realmId}
+            and r.is_admin = 1
+        </where>
+        order by m.order_num
+
+    </select>
 </mapper>

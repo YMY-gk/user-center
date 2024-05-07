@@ -1,6 +1,7 @@
 package com.user.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.common.CommonCode;
 import com.user.common.result.PageResult;
@@ -50,7 +51,7 @@ public class SysCooperateController {
     @ApiOperation("获取全部合作")
     public Result< List<CooperateVo>> searchcooperate(@RequestBody CooperateReq req  ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             req.setId(realmId);
         }
         List<CooperateVo> cooperate = sysCooperateService.searchcooperate(req);
@@ -60,8 +61,8 @@ public class SysCooperateController {
     @ApiOperation("获取全部合作")
     public PageResult< CooperateVo> searchPagecooperate(@RequestBody CooperateReq req  ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
-            return PageResultUtil.OK(null);
+        if (ObjectUtil.isNotEmpty(realmId)){
+            req.setId(realmId);
         }
         Page<CooperateVo> cooperates = sysCooperateService.searchPagecooperate(req);
         return PageResultUtil.OK(cooperates);
@@ -70,7 +71,7 @@ public class SysCooperateController {
     @ApiOperation("添加合作")
     public Result<Objects> savecooperate(@RequestBody SysCooperate syscooperate ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             return ResultUtil.ERROR(CommonCode.PERMISSION_NO_ERROR);
         }
         sysCooperateService.savecooperate(syscooperate);
@@ -80,7 +81,7 @@ public class SysCooperateController {
     @ApiOperation("编辑合作")
     public Result<Objects> editcooperate(@RequestBody SysCooperate syscooperate ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             return ResultUtil.ERROR(CommonCode.PERMISSION_NO_ERROR);
         }
         sysCooperateService.editcooperate(syscooperate);
@@ -90,7 +91,7 @@ public class SysCooperateController {
     @ApiOperation("删除合作")
     public Result<Objects> delcooperate(@RequestParam List<Long> ids ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             return ResultUtil.ERROR(CommonCode.PERMISSION_NO_ERROR);
         }
         sysCooperateService.dels(ids);
@@ -100,7 +101,7 @@ public class SysCooperateController {
     @ApiOperation("审批合作数据")
     public Result<Objects> authCooperate(@RequestBody BaseAuth baseAuth  ){
         Long realmId = LoginSession.getRealm();
-        if (realmId.compareTo(1L)>0){
+        if (ObjectUtil.isNotEmpty(realmId)){
             return ResultUtil.ERROR(CommonCode.PERMISSION_NO_ERROR);
         }
         sysCooperateService.authCooperate(baseAuth);

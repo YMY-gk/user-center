@@ -39,4 +39,13 @@
         </foreach>
 
     </update>
+
+    <select id="getDictTypeByDictType" resultMap="BaseResultMap">
+        select * from sys_dict_type where   is_del =0
+            and  dict_type =#{dictType}
+        <if test="id !=null and id!=''">
+            and id !=#{id}
+        </if>
+        order by id desc
+    </select>
 </mapper>

@@ -1,20 +1,12 @@
 package com.user.config.Handler;
 
 import cn.hutool.json.JSONUtil;
+import com.user.common.CommonConest;
 import com.user.config.bean.LoginSession;
 import com.user.config.bean.TokenInfo;
-import com.user.domain.SysUser;
 import com.user.dto.resp.LoginUserInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -36,21 +28,23 @@ public class UserLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         long startTime=System.currentTimeMillis();
-        log.info("接口请求开始");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        try {
-            String tokenInfo = request.getHeader("tokenInfo");
 
-            if (StringUtils.isEmpty(tokenInfo)){
-                filterChain.doFilter(servletRequest,servletResponse);
-                return;
-            }
+        String tokenInfo = request.getHeader("tokenInfo");
+        log.info("Path:{},接口请求开始用户信息：{}",request.getRequestURI(),tokenInfo);
+        if (StringUtils.isEmpty(tokenInfo)){
+            filterChain.doFilter(servletRequest,servletResponse);
+            return;
+        }
+        try {
             LoginUserInfo userInfo = JSONUtil.toBean(tokenInfo, LoginUserInfo.class);
             TokenInfo info = JSONUtil.toBean(tokenInfo, TokenInfo.class);
+            if(info.getRealmId().compareTo(CommonConest.base_realm)==0){
+                info.setRealmId(null);
+                userInfo.setRealmId(null);
+            }
             info.setUser(userInfo);
             LoginSession.set(info);
-
-            //    log.info("用户信息:{}",userInfo);
 //            String cacheKey = key+ userInfo.getUsername();
 //            Optional<String> optional = JedisTool.get(cacheKey);
 //            if (optional.isPresent()) {

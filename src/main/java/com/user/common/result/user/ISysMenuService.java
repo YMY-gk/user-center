@@ -1,5 +1,6 @@
 package com.user.common.result.user;
 
+import com.user.common.result.Result;
 import com.user.domain.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.user.dto.req.MenuReq;
@@ -18,10 +19,20 @@ import java.util.List;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
-    List<MenuTree> getMenus(MenuReq req);
+    List<MenuTree> getMenus();
 
     MenuVo getMenuById(Long id);
 
     void delid(Long id);
     List<MenuTree> getMenuByParentId(Long id);
+
+    List<MenuTree> getRoleMenus(Long realmId);
+
+    Result<List<MenuTree>> getRoleMenusByUser();
+
+    void addMenu(SysMenu menu);
+
+    void editMenu(SysMenu menu);
+
+    List<MenuTree> getInitMenus(Long roleId);
 }

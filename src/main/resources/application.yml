@@ -16,7 +16,7 @@ spring:
     timeout: 5000
 eureka:
   instance:
-    hostname: 110.41.135.108/eruka
+    hostname: 110.41.135.108/center
     prefer-ip-address: true
   client:
     serviceUrl:

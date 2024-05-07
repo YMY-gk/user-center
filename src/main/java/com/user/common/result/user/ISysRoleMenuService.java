@@ -18,10 +18,9 @@ import java.util.List;
  */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
-    List<MenuVo> getRoleMenus(RoleReq req);
-
 
     void operateRoleMenu(List<Long> menuIds, Long roleId);
 
     List<SysRoleMenu> getListByRoleIds(List<Long> roleIds);
+    List<SysRoleMenu> getListByRoleId(Long roleId);
 }

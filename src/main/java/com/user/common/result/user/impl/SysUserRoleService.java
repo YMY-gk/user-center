@@ -3,6 +3,7 @@ package com.user.common.result.user.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Lists;
 import com.user.domain.SysUserDept;
 import com.user.domain.SysUserRole;
 import com.user.dto.resp.RoleVo;
@@ -54,8 +55,18 @@ public class SysUserRoleService extends ServiceImpl<SysUserRoleMapper, SysUserRo
     }
 
     @Override
-    public List<RoleVo> getListByUserId(List<Long> userId) {
-        return this.baseMapper.getListByUserId(userId);
+    public List<RoleVo> getListByUserIds(List<Long> userIds) {
+        return this.baseMapper.getListByUserId(userIds);
 
+    }
+
+    @Override
+    public List<RoleVo> getListByUserId(Long userId) {
+        return this.baseMapper.getListByUserId(Lists.newArrayList(userId));
+    }
+
+    @Override
+    public List<String> getPByRoleIds(List<Long> roles) {
+        return this.baseMapper.getPByRoleIds(roles);
     }
 }

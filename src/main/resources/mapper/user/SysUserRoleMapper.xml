@@ -31,4 +31,19 @@
         ORDER BY u.id
 
     </select>
+
+    <select id="getPByRoleIds" resultType="java.lang.String">
+        select distinct p.url from
+         sys_permission p
+        left join  sys_menu_permission mp on p.id = mp.permission_id
+        left join sys_role_menu r on  mp.menu_id = r.menu_id
+        left join  sys_user_role u on u.role_id = r.role_id
+        <where>
+            <if test="roles!=null and  roles.size>0">
+                <foreach collection="roles" item="item" open="and u.role_id    in(" separator="," close=")" index="index">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

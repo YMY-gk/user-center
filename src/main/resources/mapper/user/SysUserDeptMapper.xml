@@ -22,7 +22,7 @@
         sys_user_dept u
         inner join sys_dept d on u.dept_id = d.id
         WHERE d.is_del =  0
-        <foreach collection="userIds" item="item" open="and d.id    in(" separator="," close=")" index="index">
+        <foreach collection="userIds" item="item" open="and u.user_id    in(" separator="," close=")" index="index">
             #{item}
         </foreach>
         ORDER BY u.id

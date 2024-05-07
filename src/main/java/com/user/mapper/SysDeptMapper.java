@@ -19,7 +19,7 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     List<DeptTree> getDepts(@Param("realmId") Long realmId);
 
-    DeptTree getDeptById(@Param("id") Long id);
+    DeptTree getDeptById(@Param("id") Long id,@Param("realmId") Long realmId);
 
     List<DeptTree> getDeptByParentId(@Param("realmId")Long realmId);
 

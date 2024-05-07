@@ -111,7 +111,7 @@ public class SysRole extends Model<SysRole> {
     @TableLogic
     private Integer isDel;
     /**
-     * 是否删除：0未，1删除
+     * 是否删除：0未，1默认
      */
     @TableField("is_admin")
     private Integer isAdmin;

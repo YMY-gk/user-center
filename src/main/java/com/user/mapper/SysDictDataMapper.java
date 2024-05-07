@@ -27,4 +27,6 @@ public interface SysDictDataMapper extends BaseMapper<SysDictData> {
 
 
     List<SysDictData> getDictDataByType(@Param("type") String type, @Param("realmId") Long realmId);
+
+    Page<DictDataVo> getRealmPageDicts(Page<DictDataVo> page, @Param("req")  DictDataReq req, @Param("realmId") Long realm);
 }

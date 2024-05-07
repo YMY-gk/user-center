@@ -1,17 +1,26 @@
 package com.user.common.result.user.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Lists;
 import com.user.common.CommonConest;
+import com.user.common.result.Result;
 import com.user.common.result.user.ISysMenuService;
+import com.user.config.bean.InitializationBean;
+import com.user.config.bean.LoginSession;
 import com.user.domain.SysMenu;
+import com.user.domain.SysRole;
 import com.user.dto.req.MenuReq;
 import com.user.dto.resp.MenuTree;
 import com.user.dto.resp.MenuVo;
 import com.user.mapper.SysMenuMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.user.util.base.ResultUtil;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +34,48 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
+    @Resource
+    InitializationBean initializationBean;
+    @Resource
+    SysRoleService sysRoleService;
 
     @Override
-    public List<MenuTree> getMenus(MenuReq req) {
+    public void addMenu(SysMenu menu) {
+        this.save(menu);
+    }
+
+    @Override
+    public void editMenu(SysMenu menu) {
+        this.updateById(menu);
+    }
+
+    @Override
+    public List<MenuTree> getInitMenus(Long roleId) {
+        Long realmId = LoginSession.getRealm();
+        SysRole role = new SysRole();
+        //1、roleid不为空
+        if (ObjectUtil.isNotEmpty(roleId)){
+            role = sysRoleService.getById(roleId);
+            realmId = role.getRealmId();
+            if (role.getIsAdmin().compareTo(CommonConest.base_admin)==0){
+                return this.getMenus();
+            }
+            List<MenuTree> list   = this.baseMapper.getInitMenus(realmId);
+            List<MenuTree> tree = this.recursionTreeApply(list, Lists.newArrayList(CommonConest.treeParentId));
+            return tree;
+        }
+
+        //2且roleid为空
+        if (ObjectUtil.isEmpty(realmId)){
+            return this.getMenus();
+        }
+        List<MenuTree> list   = this.baseMapper.getInitMenus(realmId);
+        List<MenuTree> tree = this.recursionTreeApply(list, Lists.newArrayList(CommonConest.treeParentId));
+        return tree;
+    }
+
+    @Override
+    public List<MenuTree> getMenus() {
         List<MenuTree> list   = this.baseMapper.getMenus();
         List<MenuTree> tree = this.recursionTreeApply(list, Lists.newArrayList(CommonConest.treeParentId));
         return tree;
@@ -44,6 +92,37 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> implemen
         List<MenuTree> tree = this.recursionTreeApply(list, Lists.newArrayList(id));
         return tree;
     }
+
+    @Override
+    public List<MenuTree> getRoleMenus(Long realmId) {
+        List<MenuTree> list = new ArrayList<>();
+        if (realmId.compareTo(1L) == 0){
+            list   = this.baseMapper.getMenus();
+        }else {
+            list   = this.baseMapper.getRoleMenus(realmId);
+        }
+        List<MenuTree> tree = this.recursionTreeApply(list, Lists.newArrayList(CommonConest.treeParentId));
+        return tree;
+    }
+
+    @Override
+    public Result<List<MenuTree>> getRoleMenusByUser() {
+        List<Long> roles = LoginSession.getUser().getRoles();
+        String userName =LoginSession.getUserName();
+        if (CollUtil.isEmpty(roles)&&!initializationBean.getUserName().equals(userName)){
+            return  ResultUtil.OK();
+        }
+        List<MenuTree> list   = this.baseMapper.getRoleMenusByUser(roles,LoginSession.getRealm());
+        if (CollUtil.isEmpty(list)){
+            return  ResultUtil.OK();
+        }
+        List<String> permissions = list.stream().map(MenuTree::getPerms).distinct().collect(Collectors.toList());
+        List<String> menuTypes = Lists.newArrayList("C","M");
+        List<MenuTree> tree = this.recursionTreeApply(list.stream().filter(x->menuTypes.contains(x.getMenuType())).collect(Collectors.toList()),
+                Lists.newArrayList(CommonConest.treeParentId));
+        return ResultUtil.OK(tree.get(0).getChilds(),permissions);
+    }
+
     @Override
     public void delid(Long id) {
         List<MenuTree> list   = this.baseMapper.getMenus();

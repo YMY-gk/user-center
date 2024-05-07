@@ -3,12 +3,14 @@ package com.user.common.result.user.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.user.common.result.Result;
 import com.user.common.result.user.ISysDictTypeService;
 import com.user.config.bean.LoginSession;
 import com.user.domain.SysDictType;
 import com.user.dto.req.DictTypeReq;
 import com.user.mapper.SysDictTypeMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.user.util.base.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,13 +43,24 @@ public class SysDictTypeService extends ServiceImpl<SysDictTypeMapper, SysDictTy
     }
 
     @Override
-    public void addDictType(SysDictType dictType) {
+    public Result<Object> addDictType(SysDictType dictType) {
+        List<SysDictType>  exits=  this.baseMapper.getDictTypeByDictType(dictType.getDictType(),dictType.getId());
+        if(CollUtil.isNotEmpty(exits)){
+            return ResultUtil.ERROR(2003,null,"存在相同类型数据");
+        }
         this.baseMapper.insert(dictType);
+        return ResultUtil.OK();
+
     }
 
     @Override
-    public void editDictType(SysDictType dictType) {
+    public Result<Object> editDictType(SysDictType dictType) {
+        List<SysDictType>  exits=  this.baseMapper.getDictTypeByDictType(dictType.getDictType(),dictType.getId());
+        if(CollUtil.isNotEmpty(exits)){
+            return ResultUtil.ERROR(2003,null,"存在相同类型数据");
+        }
         this.baseMapper.updateById(dictType);
+        return ResultUtil.OK();
     }
 
     @Override

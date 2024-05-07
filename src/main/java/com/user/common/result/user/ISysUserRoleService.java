@@ -18,5 +18,8 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
 
     void edit(List<Long> roleIds, Long userId);
 
-    List<RoleVo> getListByUserId(List<Long> userId);
+    List<RoleVo> getListByUserIds(List<Long> userId);
+    List<RoleVo> getListByUserId(Long userId);
+
+    List<String> getPByRoleIds(List<Long> roles);
 }

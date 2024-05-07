@@ -18,4 +18,6 @@ import java.util.List;
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     List<RoleVo> getListByUserId(@Param("userIds") List<Long> userIds);
+
+    List<String> getPByRoleIds(@Param("roles") List<Long> roles);
 }

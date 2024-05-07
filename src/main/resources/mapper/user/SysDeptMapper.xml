@@ -36,7 +36,11 @@
     </select>
 
     <select id="getDeptById" resultMap="TreeResultMap">
-        select * from sys_dept where id =#{id}
+        select * from sys_dept where
+            id =#{id}
+            <if test="realmId !=null">
+                and realm_id =#{realmId}
+            </if>
             and is_del = 0
     </select>
 

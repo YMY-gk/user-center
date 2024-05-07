@@ -52,6 +52,7 @@ public class ResultUtil<R>  {
         Result<R> resultObject = new Result(resultCode);
         resultObject.setData(data);
         resultObject.setStatus(status);
+        resultObject.setExtra(extra);
         return resultObject;
     }
 

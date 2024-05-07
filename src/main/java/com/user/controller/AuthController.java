@@ -13,6 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint;
 import org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.util.StringUtils;
@@ -40,6 +41,8 @@ public class AuthController  {
     //令牌请求的端点
     @Autowired
     private TokenEndpoint tokenEndpoint;
+    @Autowired
+    private AuthorizationEndpoint authorizationEndpoint;
     @Autowired
     private CheckTokenEndpoint checkTokenEndpoint;
     @Autowired
@@ -89,5 +92,21 @@ public class AuthController  {
         return ResultUtil.OK(map);
 
     }
+//    /**
+//     * 重写/oauth/check_token这个默认接口，用于校验令牌，返回的数据格式统一
+//     */
+//    @GetMapping(value = "/login_out")
+//    @ApiOperation("")
+//    public Result<Map<String,?>> loginOut()  {
+//        String value = request.getHeader("Authorization");
+//        if (StringUtils.isEmpty(value)){
+//            return ResultUtil.OK();
+//        }
+//        String token = StrUtil.replaceIgnoreCase(value, "bearer ", Strings.EMPTY);
+//
+//        Map<String, ?> map = authorizationEndpoint.(token);
+//        return ResultUtil.OK(map);
+//
+//    }
 
 }

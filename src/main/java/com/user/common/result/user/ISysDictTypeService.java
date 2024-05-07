@@ -1,6 +1,7 @@
 package com.user.common.result.user;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.user.common.result.Result;
 import com.user.domain.SysDictType;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.user.dto.req.DictTypeReq;
@@ -21,9 +22,9 @@ public interface ISysDictTypeService extends IService<SysDictType> {
 
     SysDictType getDictTypeById(Long id);
 
-    void addDictType(SysDictType dictType);
+    Result<Object> addDictType(SysDictType dictType);
 
-    void editDictType(SysDictType dictType);
+    Result<Object> editDictType(SysDictType dictType);
 
     void delDictType(List<Long> id);
 

@@ -1,9 +1,12 @@
 package com.user.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.user.common.result.Result;
+import com.user.common.result.user.impl.SysMenuService;
 import com.user.common.result.user.impl.SysRoleMenuService;
 import com.user.common.result.user.impl.SysRoleService;
+import com.user.config.bean.LoginSession;
 import com.user.domain.SysRole;
 import com.user.dto.req.RoleReq;
 import com.user.dto.resp.*;
@@ -37,6 +40,10 @@ public class SysRoleController {
     @PostMapping(value = "/list")
     @ApiOperation("获取角色列表")
     public Result<Object> getRoles(@RequestBody RoleReq req) {
+        Long realmId = LoginSession.getRealm();
+        if (ObjectUtil.isEmpty(req.getRealmId())){
+            req.setRealmId(realmId);
+        }
         List<RoleVo> roles = sysRoleService.getRoles(req);
         return ResultUtil.OK(roles);
     }
@@ -46,6 +53,10 @@ public class SysRoleController {
     @PostMapping(value = "/add")
     @ApiOperation("新增角色")
     public Result<Object> addRole(@RequestBody SysRole role) {
+        Long realmId = LoginSession.getRealm();
+        if (ObjectUtil.isEmpty(role.getRealmId())){
+            role.setRealmId(realmId);
+        }
         sysRoleService.saveOrEdit(role);
         return ResultUtil.OK();
     }
@@ -55,6 +66,10 @@ public class SysRoleController {
     @PostMapping(value = "/edit")
     @ApiOperation("修改角色数据")
     public Result<Object> editRole(@RequestBody SysRole role) {
+        Long realmId = LoginSession.getRealm();
+        if (ObjectUtil.isEmpty(role.getRealmId())){
+            role.setRealmId(realmId);
+        }
         sysRoleService.saveOrEdit(role);
         return ResultUtil.OK();
     }
@@ -66,15 +81,6 @@ public class SysRoleController {
     public Result<Object> delRoles(@RequestBody RoleReq role) {
         sysRoleService.dels(role.getRoleIds());
         return ResultUtil.OK();
-    }
-    /**
-     * 角色菜单操做
-     */
-    @PostMapping(value = "/menu/list")
-    @ApiOperation("获取角色菜单数据")
-    public Result<Object> getRoleMenus(@RequestBody RoleReq req) {
-        List<MenuVo> roles = sysRoleMenuService.getRoleMenus(req);
-        return ResultUtil.OK(roles);
     }
     /**
      * 角色菜单操做

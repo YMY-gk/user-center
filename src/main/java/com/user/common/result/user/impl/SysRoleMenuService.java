@@ -29,10 +29,6 @@ import java.util.stream.Collectors;
 @Service
 public class SysRoleMenuService extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements ISysRoleMenuService {
 
-    @Override
-    public List<MenuVo> getRoleMenus(RoleReq req) {
-        return null;
-    }
 
     @Override
     public void operateRoleMenu(List<Long> menuIds, Long roleId) {
@@ -66,6 +62,11 @@ public class SysRoleMenuService extends ServiceImpl<SysRoleMenuMapper, SysRoleMe
         queryWrapper.lambda().in(SysRoleMenu::getRoleId,roleIds);
         List<SysRoleMenu> menus = this.baseMapper.selectList(queryWrapper);
         return menus;
+    }
+
+    @Override
+    public List<SysRoleMenu> getListByRoleId(Long roleId) {
+        return null;
     }
 
 }

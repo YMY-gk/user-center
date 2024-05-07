@@ -2,6 +2,7 @@ package com.user.common.result.user.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.user.common.CommonCode;
 import com.user.common.result.PageResult;
@@ -69,7 +70,7 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
     }
     private void buldResult(List<UserVo> records) {
         List<Long> userId = records.stream().map(UserVo::getUserId).collect(Collectors.toList());
-        Map<Long,List<RoleVo>> rolesMap = sysUserRoleService.getListByUserId(userId)
+        Map<Long,List<RoleVo>> rolesMap = sysUserRoleService.getListByUserIds(userId)
                 .stream().collect(Collectors.groupingBy(RoleVo::getUserId));
         Map<Long, List<DeptTree>> deptVosMap = sysUserDeptService.getListByUserId(userId)
                 .stream().collect(Collectors.groupingBy(DeptTree::getUserId));
@@ -96,15 +97,20 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
 
     public Result<Object>  addUser(SysUser user) {
         Long realm = LoginSession.getRealm();
-        if (realm != 1L && ObjectUtils.isEmpty(user.getUserId())){
+
+        if (ObjectUtils.isNotEmpty(realm) && ObjectUtils.isEmpty(user.getUserId())){
             user.setRealmId(realm);
         }
-        String  salt = UUID.randomUUID().toString();
-        user.setSalt(salt);
-        String pwd =initializationBean.getCustomPwd()+salt;
-        pwd = passwordEncoder.encode(pwd);
-        user.setPassword(pwd);
-        user.setPwdUpdateDate(System.currentTimeMillis());
+        List<SysUser> users = this.baseMapper.selectUsersByName(user.getLoginName(),user.getUserId(),user.getRealmId());
+        if (CollUtil.isNotEmpty(users)){
+            return ResultUtil.ERROR(400,null,"存在相同登录名用户，请处理");
+        }
+        if (ObjectUtils.isEmpty(user.getUserId())) {
+            String pwd = initializationBean.getCustomPwd();
+            pwd = passwordEncoder.encode(pwd);
+            user.setPassword(pwd);
+            user.setPwdUpdateDate(System.currentTimeMillis());
+        }
         this.saveOrUpdate(user);
         sysUserRoleService.edit(user.getRoleIds(),user.getUserId());
         sysUserDeptService.edit(user.getDeptIds(),user.getUserId());
@@ -115,7 +121,6 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> implemen
         if (ObjectUtils.isEmpty(sysUser)){
             return ResultUtil.ERROR(CommonCode.RECORD_NO_EXIST);
         }
-        pwd =pwd+sysUser.getSalt();
         pwd = passwordEncoder.encode(pwd);
         sysUser.setPwdUpdateDate(System.currentTimeMillis());
         sysUser.setPassword(pwd);

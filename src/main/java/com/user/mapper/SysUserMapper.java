@@ -20,6 +20,7 @@ import java.util.List;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser selectByName(@Param("username") String username);
+    List<SysUser> selectUsersByName(@Param("username") String username, @Param("id") Long id, @Param("realmId") Long realmId);
 
     Page<UserVo> queryList(Page<UserVo> page, @Param("user")  UserReq user);
     List<UserVo> queryList(@Param("user")  UserReq user);

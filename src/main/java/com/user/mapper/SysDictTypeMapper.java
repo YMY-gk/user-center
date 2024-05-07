@@ -24,4 +24,6 @@ public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
     List<SysDictType> getListDictType(@Param("req") DictTypeReq req);
 
     void deleteIds(@Param("ids") List<Long> ids, @Param("updateBy") String updateby, @Param("time") long currentTimeMillis);
+
+    List<SysDictType> getDictTypeByDictType(@Param("dictType")  String dictType,@Param("id")   Long id);
 }

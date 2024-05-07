@@ -12,8 +12,6 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,8 +32,6 @@ import java.util.stream.Collectors;
 public class MyClientDetialService implements ClientDetailsService {
     @Resource
     private OauthClientDetailsService oauthClientDetailsService;
-    @Resource
-    private PasswordEncoder passwordEncoder;
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         OauthClientDetails oauthClientDetails =oauthClientDetailsService.selectByClientId(clientId);
